@@ -1,0 +1,68 @@
+.acordeon {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid rgba(173, 165, 165, 0.171);
+  width: 100%;
+}
+.acordeon .title-container {
+  display: flex;
+  align-items: center;
+  background-color: #EDF1F2;
+  height: 100px;
+  transition: all 0.5s;
+}
+.acordeon .title-container.unfolded {
+  background-color: #fff;
+}
+.acordeon .title-container .title-acordeon {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+.acordeon .title-container img {
+  width: 100%;
+  min-width: 80apx;
+  max-width: 100px;
+  height: 100%;
+  min-height: 85px;
+  max-height: 85px;
+}
+.acordeon .title-container .image-acordeon {
+  width: 25%;
+  height: 100%;
+  margin-left: 10%;
+  margin-right: 15px;
+}
+.acordeon .title-container .toggle-button {
+  margin-left: auto;
+  margin-right: 10%;
+  width: 40px;
+  height: 40px;
+  background: url("/images/icon-arrow-down.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+.acordeon .title-container .toggle-button.open {
+  transform: rotate(180deg);
+}
+.acordeon .toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  overflow: hidden;
+  transition: all 0.5s;
+  height: 0px;
+  background-color: #fff;
+}
+.acordeon .toggle.open {
+  width: 100%;
+  height: 300px;
+  background-color: #fff;
+}
