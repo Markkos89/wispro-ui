@@ -12,9 +12,7 @@ import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTool
 import { useHistory } from "react-router-dom";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "./ModalModifyCandidate";
-import ModalModifyInterviews from "./ModalModifyInterviews";
 // import Swal from "sweetalert2";
-
 const H1 = styled.h1`
   font-size: 2em;
 `;
@@ -54,20 +52,12 @@ const DashboardPage = ({
   updateCandidateError,
 }) => {
   const history = useHistory();
-  const [candidates, setCandidates] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [filterValue, setFilterValue] = useState("");
-  const [filterCandidates, setFilterCandidates] = useState([]);
+  const [usuariosFilter, setUsuariosFilter] = useState([]);
   const [showModalModify, setShowModalModify] = useState(false);
   const [candidateToModify, setCandidateToModify] = useState([]);
   const [skills, setSkills] = useState([]);
-  const [interviews, setInterviews] = useState([]);
-  const [
-    candidateToModifyInterviews,
-    setCandidateToModifyInterviews,
-  ] = useState([]);
-  const [showModalModifyInterviews, setShowModalModifyInterviews] = useState(
-    false
-  );
   const [linkedin, setLinkedin] = useState("");
   const [github, setGithub] = useState("");
 
@@ -80,8 +70,9 @@ const DashboardPage = ({
   }, [getCandidates]);
 
   useEffect(() => {
-    setCandidates(getAllData);
+    setUsuarios(getAllData);
   }, [getAllData]);
+
 
   // useEffect(() => {
   //   if (updateCandidateData.length && updateCandidateError === "")
@@ -90,7 +81,7 @@ const DashboardPage = ({
   // }, [updateCandidateData, updateCandidateError]);
 
   useEffect(() => {
-    setFilterCandidates(
+    /* setFilterUsers(
       candidates.filter((candidate) => {
         return (
           (candidate &&
@@ -101,8 +92,9 @@ const DashboardPage = ({
             candidate.habilities.includes(filterValue))
         );
       })
-    );
-  }, [filterValue, candidates]);
+    ); */
+    setUsuariosFilter(usuarios)
+  }, [setUsuariosFilter, usuarios]);
 
   // const deleteEmployee = (id) => {
   //   const confirmDelete = window.confirm("Delete employee forever?");
@@ -130,12 +122,6 @@ const DashboardPage = ({
     setShowModalModify(true);
   };
 
-  const handleInterviewsCandidate = (candidate) => {
-    setCandidateToModifyInterviews(candidate);
-    setInterviews(candidate.interviews);
-    setShowModalModifyInterviews(true);
-  };
-
   const handleDeleteCandidate = () => {
     console.log("handleDeleteCandidate");
   };
@@ -144,22 +130,13 @@ const DashboardPage = ({
     setShowModalModify(false);
   };
 
-  const handleCloseModalModifyInterviews = () => {
-    setShowModalModifyInterviews(false);
-  };
-
-  const handleAddInterviewRow = (interviews) => {
-    const newInterviewsRow = { pregunta: "", respuesta: "" };
-    setInterviews([...interviews, newInterviewsRow]);
-  };
-
   return (
     <>
       <StyleDashboard>
         <StyleSearch>
           <SearchBar
             value={filterValue}
-            employees={candidates}
+            employees={usuarios}
             changeHandler={setFilterValue}
           />
         </StyleSearch>
@@ -185,41 +162,25 @@ const DashboardPage = ({
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Name</th>
-                      <th>Titulo</th>
-                      <th>Skills</th>
-                      <th>Provincia</th>
-                      <th>Ciudad</th>
-                      <th>Pais</th>
-                      <th colSpan="3">Opciones</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>DNI</th>
+                      <th>E-mail</th>
+                      <th>Direccion</th>
+                      <th colSpan="2">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filterCandidates &&
-                      filterCandidates.map((candidate, index) => {
+                    {usuariosFilter &&
+                      usuariosFilter.map((candidate, index) => {
                         return (
                           <tr key={index}>
                             <td>{index + 1}</td>
-                            <td>{candidate.name}</td>
-                            <td>{candidate.profession}</td>
-                            <td>
-                              {candidate.habilities.map((el) => {
-                                return el + ", ";
-                              })}
-                            </td>
-                            <td>{candidate.province}</td>
-                            <td>{candidate.city}</td>
-                            <td>{candidate.country}</td>
-                            <td>
-                              <ButtonWithIconAndTooltip
-                                icon={faEdit}
-                                placement="top"
-                                variant="primary"
-                                fn={() => handleInterviewsCandidate(candidate)}
-                                btnSize="sm"
-                                tooltipText="Entrevistas/Notas"
-                              />
-                            </td>
+                            <td>{candidate.firstname}</td>
+                            <td>{candidate.lastname}</td>
+                            <td>{candidate.dni}</td>
+                            <td>{candidate.email}</td>
+                            <td>{candidate.address}</td>
                             <td>
                               <ButtonWithIconAndTooltip
                                 icon={faEdit}
@@ -261,15 +222,6 @@ const DashboardPage = ({
         setLinkedin={setLinkedin}
         github={github}
         setGithub={setGithub}
-      />
-      <ModalModifyInterviews
-        interviews={interviews}
-        setInterviews={setInterviews}
-        show={showModalModifyInterviews}
-        handleClose={handleCloseModalModifyInterviews}
-        candidate={candidateToModifyInterviews}
-        updateCandidate={updateCandidate}
-        handleAddInterviewRow={handleAddInterviewRow}
       />
     </>
   );
