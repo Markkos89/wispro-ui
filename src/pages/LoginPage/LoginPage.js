@@ -7,8 +7,8 @@ import { useHistory } from 'react-router-dom';
 
 const StyleLogin = styled.div`
   display: flex;
-  width: 100%;
-  height: 950px;
+  width: 100vm;
+  height: 100vh;
   background-color: #000;
   margin-top: 0px;
 
