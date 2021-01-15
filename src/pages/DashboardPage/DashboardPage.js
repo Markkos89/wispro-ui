@@ -12,6 +12,8 @@ import { useHistory } from "react-router-dom";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "./ModalModifyCandidate";
 import UsersFilter from '../../components/UsersFilter'
+import DeleteUserModal from '../../components/DeleteUserModal'
+import isObjectEmpty from "utils/isObjectEmpty";
 // import Swal from "sweetalert2";
 
 const StyleDashboard = styled.div`
@@ -35,7 +37,6 @@ const DashboardPage = ({
   getAllData,
   getAllLoading,
   getAllError,
-  updateCandidate,
   updateCandidateData,
   updateCandidateError,
 }) => {
@@ -44,6 +45,7 @@ const DashboardPage = ({
   const [usuariosFilter, setUsuariosFilter] = useState([]);
   const [showModalModify, setShowModalModify] = useState(false);
   const [candidateToModify, setCandidateToModify] = useState({});
+  const [userToDelete, setUserToDelete] = useState({})
 
   useEffect(() => {
     async function fetchData() {
@@ -68,15 +70,38 @@ const DashboardPage = ({
   //       .then(() => setCandidates(candidates.filter((el) => el.id !== id)));
   //   }
   // };
+  const updateCandidate = (updatedUser) => {
+    const updatedList = [...usuarios]
+    updatedList.forEach((user, idx) => {
+      if(user.id === updatedUser.id){
+        updatedList[idx] = updatedUser
+        updatedList[idx].updatedAt = new Date().toISOString()
+      }
+    })
+
+    setUsuarios(updatedList)
+    handleCloseModalModifyCandidate()
+  }
 
   const handleModifyCandidate = (candidate) => {
     setCandidateToModify(candidate);
     setShowModalModify(true);
   }
 
-  const handleDeleteCandidate = () => {
-    console.log("handleDeleteCandidate");
+  const deleteCandidate = () => {
+    setUsuarios(
+      [...usuarios].filter(user => user.id !== userToDelete.id)
+    )
+    setUserToDelete({})
   };
+
+  const handleDeleteUserButton = (user) => {
+    setUserToDelete(user)
+  } 
+
+  const handleCloseDeleteModal = () => {
+    setUserToDelete({})
+  }
 
   const handleCloseModalModifyCandidate = () => {
     setShowModalModify(false);
@@ -124,7 +149,7 @@ const DashboardPage = ({
                     {usuariosFilter &&
                       usuariosFilter.map((candidate, index) => {
                         return (
-                          <tr key={index}>
+                          <tr key={candidate.id}>
                             <td>{index + 1}</td>
                             <td>{candidate.firstname}</td>
                             <td>{candidate.lastname}</td>
@@ -147,7 +172,7 @@ const DashboardPage = ({
                                 icon={faTrash}
                                 placement="top"
                                 variant="danger"
-                                fn={() => handleDeleteCandidate()}
+                                fn={() => handleDeleteUserButton(candidate)}
                                 btnSize="sm"
                                 tooltipText="Eliminar Candidato"
                               />
@@ -167,6 +192,12 @@ const DashboardPage = ({
         handleClose={handleCloseModalModifyCandidate}
         candidate={candidateToModify}
         updateCandidate={updateCandidate}
+      />
+      <DeleteUserModal
+        show={!isObjectEmpty(userToDelete) ? true : false}
+        user={userToDelete}
+        deleteUser={deleteCandidate}
+        handleClose={handleCloseDeleteModal}
       />
     </>
   );
