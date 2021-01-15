@@ -8,7 +8,6 @@ const StyledNavbar = styled(Navbar)`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: fixed;
   width: 100%;
   height: 100px;
   margin-top: 0px;
