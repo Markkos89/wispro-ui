@@ -4,18 +4,15 @@
 /* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/state-in-constructor */
 import React, { useState, useEffect } from "react";
-import { Row, Col, Container, Button, Table } from "react-bootstrap";
+import { Row, Col, Container, Table } from "react-bootstrap";
 import styled from "styled-components";
-import SearchBar from "../../components/SearchBar";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
 // import TableTemplate from "../../components/Tables/TableTemplate";
 import { useHistory } from "react-router-dom";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "./ModalModifyCandidate";
+import UsersFilter from '../../components/UsersFilter'
 // import Swal from "sweetalert2";
-const H1 = styled.h1`
-  font-size: 2em;
-`;
 
 const StyleDashboard = styled.div`
   display: flex;
@@ -33,15 +30,6 @@ const StyleTable = styled.div`
   margin-top: 50px;
 `;
 
-const StyleSearch = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 150px;
-  margin-right: auto;
-`;
-
 const DashboardPage = ({
   getCandidates,
   getAllData,
@@ -53,7 +41,6 @@ const DashboardPage = ({
 }) => {
   const history = useHistory();
   const [usuarios, setUsuarios] = useState([]);
-  const [filterValue, setFilterValue] = useState("");
   const [usuariosFilter, setUsuariosFilter] = useState([]);
   const [showModalModify, setShowModalModify] = useState(false);
   const [candidateToModify, setCandidateToModify] = useState([]);
@@ -73,28 +60,7 @@ const DashboardPage = ({
     setUsuarios(getAllData);
   }, [getAllData]);
 
-
-  // useEffect(() => {
-  //   if (updateCandidateData.length && updateCandidateError === "")
-  //     Swal.fire("Exito!", "El registro se actualizó correctamente.", "success");
-  //   else Swal.fire("Error!", updateCandidateError, "error");
-  // }, [updateCandidateData, updateCandidateError]);
-
-  useEffect(() => {
-    /* setFilterUsers(
-      candidates.filter((candidate) => {
-        return (
-          (candidate &&
-            candidate.name &&
-            candidate.name.includes(filterValue)) ||
-          (candidate &&
-            candidate.habilities &&
-            candidate.habilities.includes(filterValue))
-        );
-      })
-    ); */
-    setUsuariosFilter(usuarios)
-  }, [setUsuariosFilter, usuarios]);
+ 
 
   // const deleteEmployee = (id) => {
   //   const confirmDelete = window.confirm("Delete employee forever?");
@@ -105,10 +71,6 @@ const DashboardPage = ({
   //       .then(() => setCandidates(candidates.filter((el) => el.id !== id)));
   //   }
   // };
-
-  const openAddFormHandler = () => {
-    history.replace("/add-candidate");
-  };
 
   const handleModifyCandidate = (candidate) => {
     setCandidateToModify(candidate);
@@ -133,16 +95,9 @@ const DashboardPage = ({
   return (
     <>
       <StyleDashboard>
-        <StyleSearch>
-          <SearchBar
-            value={filterValue}
-            employees={usuarios}
-            changeHandler={setFilterValue}
-          />
-        </StyleSearch>
         <StyleTable>
           <Container>
-            <Row>
+            {/* <Row>
               <Col xs={5} sm={5}>
                 <Button
                   variant="primary"
@@ -152,10 +107,13 @@ const DashboardPage = ({
                   Agregar Candidato
                 </Button>
               </Col>
-              <Col xs={7} sm={7}>
-                <H1>Lista de Candidatos</H1>
+            </Row> */}
+            <Row>
+              <Col>
+                <h1>Lista de Candidatos</h1>
               </Col>
             </Row>
+            <UsersFilter originalUserList={usuarios} setFiltredUsersList={setUsuariosFilter}></UsersFilter>
             <Row>
               <Col xs={12} sm={12} className="text-center">
                 <Table striped bordered hover>
@@ -167,6 +125,7 @@ const DashboardPage = ({
                       <th>DNI</th>
                       <th>E-mail</th>
                       <th>Direccion</th>
+                      <th>Fecha de alta</th>
                       <th colSpan="2">Opciones</th>
                     </tr>
                   </thead>
@@ -181,6 +140,7 @@ const DashboardPage = ({
                             <td>{candidate.dni}</td>
                             <td>{candidate.email}</td>
                             <td>{candidate.address}</td>
+                            <td>{new Date(candidate.createdAt).toLocaleDateString()}</td>
                             <td>
                               <ButtonWithIconAndTooltip
                                 icon={faEdit}
