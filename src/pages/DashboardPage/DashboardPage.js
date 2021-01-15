@@ -43,10 +43,7 @@ const DashboardPage = ({
   const [usuarios, setUsuarios] = useState([]);
   const [usuariosFilter, setUsuariosFilter] = useState([]);
   const [showModalModify, setShowModalModify] = useState(false);
-  const [candidateToModify, setCandidateToModify] = useState([]);
-  const [skills, setSkills] = useState([]);
-  const [linkedin, setLinkedin] = useState("");
-  const [github, setGithub] = useState("");
+  const [candidateToModify, setCandidateToModify] = useState({});
 
   useEffect(() => {
     async function fetchData() {
@@ -74,15 +71,8 @@ const DashboardPage = ({
 
   const handleModifyCandidate = (candidate) => {
     setCandidateToModify(candidate);
-    setSkills(
-      candidate.habilities.map((hab) => {
-        return { value: hab, label: hab };
-      })
-    );
-    setGithub(candidate.github);
-    setLinkedin(candidate.linkedin);
     setShowModalModify(true);
-  };
+  }
 
   const handleDeleteCandidate = () => {
     console.log("handleDeleteCandidate");
@@ -90,6 +80,7 @@ const DashboardPage = ({
 
   const handleCloseModalModifyCandidate = () => {
     setShowModalModify(false);
+    setCandidateToModify({})
   };
 
   return (
@@ -175,13 +166,7 @@ const DashboardPage = ({
         show={showModalModify}
         handleClose={handleCloseModalModifyCandidate}
         candidate={candidateToModify}
-        skills={skills}
-        setSkills={setSkills}
         updateCandidate={updateCandidate}
-        linkedin={linkedin}
-        setLinkedin={setLinkedin}
-        github={github}
-        setGithub={setGithub}
       />
     </>
   );
