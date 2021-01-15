@@ -1,149 +1,191 @@
 [
   {
-    "firstname": "Agustin",
-    "lastname":  "Ortega",
-    "dni": 24563987,
-    "address": "9 de Julio 1534",
-    "email": "agustin@gmail.com"
+    "firstname": "Rocio",
+    "lastname":  "Vogt",
+    "dni": 44843695,
+    "address": "Colon 842",
+    "email": "rocio@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-01-04T00:00:00.000Z"
   },
   {
     "firstname": "Agustin",
     "lastname":  "Gonzales",
     "dni": 53269874,
     "address": "Alem 1453",
-    "email": "agustin.gonzales@gmail.com"
+    "email": "agustin.gonzales@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-03-06T00:00:00.000Z"
   },
   {
     "firstname": "Milagros",
     "lastname":  "Foos",
     "dni": 12486357,
     "address": "Venezuela 493",
-    "email": "milagros@gmail.com"
+    "email": "milagros@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-07-12T00:00:00.000Z"
+  },
+  {
+    "firstname": "Agustin",
+    "lastname":  "Ortega",
+    "dni": 24563987,
+    "address": "9 de Julio 1534",
+    "email": "agustin@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-02-24T00:00:00.000Z"
   },
   {
     "firstname": "Florencia",
     "lastname":  "Perez",
     "dni": 32486597,
     "address": "San Martin 4812",
-    "email": "florencia@gmail.com"
-  },
-  {
-    "firstname": "Marcos",
-    "lastname":  "Lopez",
-    "dni": 26598743,
-    "address": "Belgrano 1478",
-    "email": "marcos@gmail.com"
+    "email": "florencia@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-07-26T00:00:00.000Z"
   },
   {
     "firstname": "Martin",
     "lastname":  "Duarte",
     "dni": 36598753,
     "address": "Roca 3256",
-    "email": "martin@gmail.com"
+    "email": "martin@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-09-21T00:00:00.000Z"
   },
   {
     "firstname": "Federico",
     "lastname":  "Wollemberg",
     "dni": 14596325,
     "address": "S. de Iriondo 2419",
-    "email": "federico@gmail.com"
+    "email": "federico@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-10-06T00:00:00.000Z"
   },
   {
     "firstname": "Agustina",
     "lastname":  "Bertran",
     "dni": 42356987,
     "address": "Chacabuco 423",
-    "email": "agustina@hotmail.com"
-  },
-  {
-    "firstname": "Sebastian",
-    "lastname":  "Kestler",
-    "dni": 41256357,
-    "address": "S. Lopez 2496",
-    "email": "sebastian@gmail.com"
+    "email": "agustina@hotmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-10-19T00:00:00.000Z"
   },
   {
     "firstname": "Antonela",
     "lastname":  "Sirini",
     "dni": 35963249,
     "address": "Oroño 2148",
-    "email": "antonela@outlook.com"
+    "email": "antonela@outlook.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-12-27T00:00:00.000Z"
   },
   {
-    "firstname": "Matias",
-    "lastname":  "Copes",
-    "dni": 41762355,
-    "address": "Rivadavia 3256",
-    "email": "matias@yahoo.com"
-  },
-  {
-    "firstname": "Kevin",
-    "lastname":  "Montu",
-    "dni": 33496351,
-    "address": "Sarmiento 963",
-    "email": "kevin@gmail.com"
-  },
-  {
-    "firstname": "Rocio",
-    "lastname":  "Vogt",
-    "dni": 44843695,
-    "address": "Colon 842",
-    "email": "rocio@gmail.com"
-  },
-  {
-    "firstname": "Alfonsina",
-    "lastname":  "Gimenez",
-    "dni": 1965912,
-    "address": "Paraguay 2631",
-    "email": "alfonsina@hotmail.com"
-  },
-  {
-    "firstname": "Lucas",
-    "lastname":  "Pelozato",
-    "dni": 20486397,
-    "address": "Soler 3201",
-    "email": "lucas@outlook.com"
-  },
-  {
-    "firstname": "Bruno",
-    "lastname":  "Acosta",
-    "dni": 25349352,
-    "address": "Pringles 3249",
-    "email": "bruno@gmail.com"
-  },
-  {
-    "firstname": "Tatiana",
-    "lastname":  "Orellano",
-    "dni": 29360014,
-    "address": "Italia 139",
-    "email": "tatiana@yahoo.com"
-  },
-  {
-    "firstname": "Carolina",
-    "lastname":  "Alamo",
-    "dni": 37492631,
-    "address": "Moreno 3699",
-    "email": "carolina@gmail.com"
+    "firstname": "Marcos",
+    "lastname":  "Lopez",
+    "dni": 26598743,
+    "address": "Belgrano 1478",
+    "email": "marcos@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-07-30T00:00:00.000Z"
   },
   {
     "firstname": "Luciano",
     "lastname":  "Coria",
     "dni": 28600349,
     "address": "Av Colonizadores 3249",
-    "email": "luciano@gmail.com"
+    "email": "luciano@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-06-12T00:00:00.000Z"
+  },
+  {
+    "firstname": "Matias",
+    "lastname":  "Copes",
+    "dni": 41762355,
+    "address": "Rivadavia 3256",
+    "email": "matias@yahoo.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-01-01T00:00:00.000Z"
+  },
+  {
+    "firstname": "Kevin",
+    "lastname":  "Montu",
+    "dni": 33496351,
+    "address": "Sarmiento 963",
+    "email": "kevin@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-12-01T00:00:00.000Z"
+  },
+  {
+    "firstname": "Alfonsina",
+    "lastname":  "Gimenez",
+    "dni": 1965912,
+    "address": "Paraguay 2631",
+    "email": "alfonsina@hotmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-01-19T00:00:00.000Z"
+  },
+  {
+    "firstname": "Lucas",
+    "lastname":  "Pelozato",
+    "dni": 20486397,
+    "address": "Soler 3201",
+    "email": "lucas@outlook.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-03-03T00:00:00.000Z"
+  },
+  {
+    "firstname": "Bruno",
+    "lastname":  "Acosta",
+    "dni": 25349352,
+    "address": "Pringles 3249",
+    "email": "bruno@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-04-18T00:00:00.000Z"
+  },
+  {
+    "firstname": "Tatiana",
+    "lastname":  "Orellano",
+    "dni": 29360014,
+    "address": "Italia 139",
+    "email": "tatiana@yahoo.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-05-22T00:00:00.000Z"
+  },
+  {
+    "firstname": "Carolina",
+    "lastname":  "Alamo",
+    "dni": 37492631,
+    "address": "Moreno 3699",
+    "email": "carolina@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-06-10T00:00:00.000Z"
   },
   {
     "firstname": "Adrian",
     "lastname":  "Zarate",
     "dni": 36053984,
     "address": "Balcarce 235",
-    "email": "adrian@outlook.com"
+    "email": "adrian@outlook.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-10-12T00:00:00.000Z"
   },
   {
     "firstname": "Juan",
     "lastname":  "Cuatrin",
     "dni": 18450267,
     "address": "Amidroz 964",
-    "email": "juan@hotmail.com"
+    "email": "juan@hotmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2020-10-18T00:00:00.000Z"
+  },
+  {
+    "firstname": "Sebastian",
+    "lastname":  "Kestler",
+    "dni": 41256357,
+    "address": "S. Lopez 2496",
+    "email": "sebastian@gmail.com",
+    "updatedAt": "2021-01-14T18:48:13.294Z",
+    "createdAt": "2019-10-24T00:00:00.000Z"
   }
 ]
