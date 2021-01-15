@@ -13,19 +13,7 @@ const ModalModifyCandidate = ({
   const [formErrors, setFormErrors] = useState({})
 
   const onSubmit = async (data) => {
-    console.log(data)
-    /* if (!data) {
-      Swal.fire(
-        "Error!",
-        "Al menos un campo de busqueda debe estar completo",
-        "error"
-      );
-    } else {
-      console.log(data);
-      await updateCandidate(data);
-
-      handleClose();
-    } */
+    await updateCandidate(data)
   };
 
   useEffect(() => {
@@ -43,6 +31,14 @@ const ModalModifyCandidate = ({
           id="userId"
           name="id"
           defaultValue={candidate.id}
+          ref={register({
+            valueAsNumber: true
+          })}
+        />
+        <input
+          hidden
+          name='createdAt'
+          defaultValue={candidate.createdAt}
           ref={register}
         />
 
