@@ -9,11 +9,14 @@ import styled from "styled-components";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
 // import TableTemplate from "../../components/Tables/TableTemplate";
 import { useHistory } from "react-router-dom";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faChartLine } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "./ModalModifyCandidate";
 import UsersFilter from '../../components/UsersFilter'
 import DeleteUserModal from '../../components/DeleteUserModal'
 import isObjectEmpty from "utils/isObjectEmpty";
+import UserStatiticsModal from '../../components/UserStatiticsModal'
+
+import accessData from '../../data/access.json'
 // import Swal from "sweetalert2";
 
 const StyleDashboard = styled.div`
@@ -46,6 +49,7 @@ const DashboardPage = ({
   const [showModalModify, setShowModalModify] = useState(false);
   const [candidateToModify, setCandidateToModify] = useState({});
   const [userToDelete, setUserToDelete] = useState({})
+  const [userAccessToView, setUserAccessToView] = useState([])
 
   useEffect(() => {
     async function fetchData() {
@@ -108,8 +112,25 @@ const DashboardPage = ({
     setCandidateToModify({})
   };
 
+  const handleCloseModalUserAccess = () => {
+    setUserAccessToView([])
+  }
+
+  const handleAccessButton = (userId) => {
+    setUserAccessToView(
+      accessData.filter(access => access.userId === userId).sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+
+        return dateA > dateB ? 1 :
+          dateB > dateA ? -1 : 0
+      })
+    )
+  }
+
   return (
     <>
+      {console.log(userAccessToView)}
       <StyleDashboard>
         <StyleTable>
           <Container>
@@ -132,7 +153,7 @@ const DashboardPage = ({
             <UsersFilter originalUserList={usuarios} setFiltredUsersList={setUsuariosFilter}></UsersFilter>
             <Row>
               <Col xs={12} sm={12} className="text-center">
-                <Table striped bordered hover>
+                <Table striped bordered hover responsive>
                   <thead>
                     <tr>
                       <th>#</th>
@@ -142,7 +163,7 @@ const DashboardPage = ({
                       <th>E-mail</th>
                       <th>Direccion</th>
                       <th>Fecha de alta</th>
-                      <th colSpan="2">Opciones</th>
+                      <th colSpan="3">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -177,6 +198,16 @@ const DashboardPage = ({
                                 tooltipText="Eliminar Candidato"
                               />
                             </td>
+                            <td>
+                              <ButtonWithIconAndTooltip
+                                icon={faChartLine}
+                                placement="top"
+                                variant="primary"
+                                fn={() => handleAccessButton(candidate.id)}
+                                btnSize="sm"
+                                tooltipText="Ver accesos"
+                              />
+                            </td>
                           </tr>
                         );
                       })}
@@ -198,6 +229,11 @@ const DashboardPage = ({
         user={userToDelete}
         deleteUser={deleteCandidate}
         handleClose={handleCloseDeleteModal}
+      />
+      <UserStatiticsModal
+        show={userAccessToView.length ? true : false}
+        accessData={userAccessToView}
+        handleClose={handleCloseModalUserAccess}
       />
     </>
   );
