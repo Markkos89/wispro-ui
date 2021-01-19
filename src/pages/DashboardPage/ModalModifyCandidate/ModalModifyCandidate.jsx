@@ -12,13 +12,9 @@ const ModalModifyCandidate = ({
   const { register, handleSubmit, formState } = useForm();
   const [formErrors, setFormErrors] = useState({})
 
-  const onSubmit = async (data) => {
-    await updateCandidate(data)
-  };
+  const onSubmit = async data => updateCandidate(data)
 
-  useEffect(() => {
-    setFormErrors(formState.errors)
-  }, [formState])
+  useEffect(() => setFormErrors(formState.errors), [formState])
 
   return (
     <Modal show={show} size="lg">
@@ -119,9 +115,7 @@ const ModalModifyCandidate = ({
             <Alert variant='danger' className='text-left'>
               <ul>
                 {
-                  Object.values(formErrors).map((error, idx) => {
-                    return <li key={idx}>{error.message}</li>
-                  })
+                  Object.values(formErrors).map((error, idx) => <li key={idx}>{error.message}</li>)
                 }
               </ul>
             </Alert>

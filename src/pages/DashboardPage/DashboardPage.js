@@ -1,14 +1,7 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/sort-comp */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/state-in-constructor */
 import React, { useState, useEffect } from "react";
 import { Row, Col, Container, Table } from "react-bootstrap";
 import styled from "styled-components";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
-// import TableTemplate from "../../components/Tables/TableTemplate";
-import { useHistory } from "react-router-dom";
 import { faEdit, faTrash, faChartLine } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "./ModalModifyCandidate";
 import UsersFilter from '../../components/UsersFilter'
@@ -17,7 +10,6 @@ import isObjectEmpty from "utils/isObjectEmpty";
 import UserStatiticsModal from '../../components/UserStatiticsModal'
 
 import accessData from '../../data/access.json'
-// import Swal from "sweetalert2";
 
 const StyleDashboard = styled.div`
   display: flex;
@@ -37,86 +29,47 @@ const StyleTable = styled.div`
 
 const DashboardPage = ({
   getCandidates,
-  getAllData,
-  getAllLoading,
-  getAllError,
-  updateCandidateData,
-  updateCandidateError,
+  getAllData
 }) => {
-  const history = useHistory();
-  const [usuarios, setUsuarios] = useState([]);
-  const [usuariosFilter, setUsuariosFilter] = useState([]);
-  const [showModalModify, setShowModalModify] = useState(false);
-  const [candidateToModify, setCandidateToModify] = useState({});
+  const [usuarios, setUsuarios] = useState([])
+  const [usuariosFilter, setUsuariosFilter] = useState([])
+  const [candidateToModify, setCandidateToModify] = useState({})
   const [userToDelete, setUserToDelete] = useState({})
   const [userAccessToView, setUserAccessToView] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getCandidates();
-      console.log(response);
+      await getCandidates();
     }
     fetchData();
-  }, [getCandidates]);
+  }, [getCandidates])
 
   useEffect(() => {
     setUsuarios(getAllData);
-  }, [getAllData]);
+  }, [getAllData])
 
- 
+  useEffect(() => setUsuariosFilter(usuarios), [usuarios])
 
-  // const deleteEmployee = (id) => {
-  //   const confirmDelete = window.confirm("Delete employee forever?");
-  //   if (confirmDelete) {
-  //     axios
-  //       .delete(`${url}/${id}`)
-  //       .then((res) => console.log(res.data))
-  //       .then(() => setCandidates(candidates.filter((el) => el.id !== id)));
-  //   }
-  // };
-  const updateCandidate = (updatedUser) => {
-    const updatedList = [...usuarios]
-    updatedList.forEach((user, idx) => {
-      if(user.id === updatedUser.id){
-        updatedList[idx] = updatedUser
-        updatedList[idx].updatedAt = new Date().toISOString()
+
+
+  const updateCandidate = updatedUser => {
+
+    setUsuarios(prevState => prevState.map(user => {
+      if(user.id === updatedUser.id) return {
+        ...updatedUser,
+        updatedAt: new Date().toISOString()
       }
-    })
-
-    setUsuarios(updatedList)
-    handleCloseModalModifyCandidate()
-  }
-
-  const handleModifyCandidate = (candidate) => {
-    setCandidateToModify(candidate);
-    setShowModalModify(true);
+      return user
+    }))
+    setCandidateToModify({})
   }
 
   const deleteCandidate = () => {
-    setUsuarios(
-      [...usuarios].filter(user => user.id !== userToDelete.id)
-    )
+    setUsuarios(prevState => prevState.filter(user => user.id !== userToDelete.id))
     setUserToDelete({})
   };
 
-  const handleDeleteUserButton = (user) => {
-    setUserToDelete(user)
-  } 
-
-  const handleCloseDeleteModal = () => {
-    setUserToDelete({})
-  }
-
-  const handleCloseModalModifyCandidate = () => {
-    setShowModalModify(false);
-    setCandidateToModify({})
-  };
-
-  const handleCloseModalUserAccess = () => {
-    setUserAccessToView([])
-  }
-
-  const handleAccessButton = (userId) => {
+  const handleAccessButton = userId => {
     setUserAccessToView(
       accessData.filter(access => access.userId === userId).sort((a, b) => {
         const dateA = new Date(a.date)
@@ -129,28 +82,19 @@ const DashboardPage = ({
   }
 
   return (
-    <>
-      {console.log(userAccessToView)}
+    <React.Fragment>
       <StyleDashboard>
         <StyleTable>
           <Container>
-            {/* <Row>
-              <Col xs={5} sm={5}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={openAddFormHandler}
-                >
-                  Agregar Candidato
-                </Button>
-              </Col>
-            </Row> */}
             <Row>
               <Col>
                 <h1>Lista de Candidatos</h1>
               </Col>
             </Row>
-            <UsersFilter originalUserList={usuarios} setFiltredUsersList={setUsuariosFilter}></UsersFilter>
+            <UsersFilter
+              originalUserList={usuarios}
+              setFiltredUsersList={setUsuariosFilter}
+            />
             <Row>
               <Col xs={12} sm={12} className="text-center">
                 <Table striped bordered hover responsive>
@@ -167,8 +111,7 @@ const DashboardPage = ({
                     </tr>
                   </thead>
                   <tbody>
-                    {usuariosFilter &&
-                      usuariosFilter.map((candidate, index) => {
+                    {usuariosFilter.map((candidate, index) => {
                         return (
                           <tr key={candidate.id}>
                             <td>{index + 1}</td>
@@ -183,7 +126,7 @@ const DashboardPage = ({
                                 icon={faEdit}
                                 placement="top"
                                 variant="warning"
-                                fn={() => handleModifyCandidate(candidate)}
+                                fn={() => setCandidateToModify(candidate)}
                                 btnSize="sm"
                                 tooltipText="Modificar Candidato"
                               />
@@ -193,7 +136,7 @@ const DashboardPage = ({
                                 icon={faTrash}
                                 placement="top"
                                 variant="danger"
-                                fn={() => handleDeleteUserButton(candidate)}
+                                fn={() => setUserToDelete(candidate)}
                                 btnSize="sm"
                                 tooltipText="Eliminar Candidato"
                               />
@@ -219,23 +162,23 @@ const DashboardPage = ({
         </StyleTable>
       </StyleDashboard>
       <ModalModifyCandidate
-        show={showModalModify}
-        handleClose={handleCloseModalModifyCandidate}
+        show={!isObjectEmpty(candidateToModify)}
+        handleClose={() => setCandidateToModify({})}
         candidate={candidateToModify}
         updateCandidate={updateCandidate}
       />
       <DeleteUserModal
-        show={!isObjectEmpty(userToDelete) ? true : false}
+        show={!isObjectEmpty(userToDelete)}
         user={userToDelete}
         deleteUser={deleteCandidate}
-        handleClose={handleCloseDeleteModal}
+        handleClose={() => setUserToDelete({})}
       />
       <UserStatiticsModal
         show={userAccessToView.length ? true : false}
         accessData={userAccessToView}
-        handleClose={handleCloseModalUserAccess}
+        handleClose={() => setUserAccessToView([])}
       />
-    </>
+    </React.Fragment>
   );
 };
 
