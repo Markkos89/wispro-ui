@@ -1,12 +1,40 @@
 import React from 'react'
 import {Modal} from 'react-bootstrap'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
+import Highcharts from 'highcharts'
+import HighchartsReact from 'highcharts-react-official'
  
 export default ({accessData, show, handleClose}) => {
-
-  const dateValueFormatter = (value) => {
-    return new Date(value).toLocaleDateString()
-  }
+  
+  const getHighchartsOptios = () => ({
+    title: '',
+    chart: {
+      type: 'line'
+    },
+    series: [
+      {
+        name: 'accesos',
+        data: accessData.map(access => access.access)
+      }
+    ], 
+    xAxis: {
+      categories:  accessData.map(access => new Date(access.date).toLocaleDateString())
+    },
+    yAxis: {
+      title: {
+        text: 'Cantidad de accesos'
+      }
+    },
+    responsive: {
+      rules: [
+        {
+          condition: {
+            maxWidth: 800,
+            maxHeight: 300
+          }
+        }
+      ]
+    }
+  })
 
 
   return <Modal show={show} size='lg'>
@@ -15,13 +43,10 @@ export default ({accessData, show, handleClose}) => {
     </Modal.Header>
 
     <Modal.Body >
-      <LineChart data={accessData} width={725} height={300}> 
-        <Line type="monotone" dataKey="access" stroke="#8884d8" />
-        <CartesianGrid stroke="#ccc"/>
-        <XAxis dataKey="date" tickFormatter={(value, idx) => idx} hide={true}/>
-        <YAxis/>
-        <Tooltip labelFormatter={dateValueFormatter}/>
-      </LineChart>
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={getHighchartsOptios()}
+      />
     </Modal.Body>
   </Modal>
 

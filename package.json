@@ -14,6 +14,8 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.21.0",
     "dayjs": "^1.8.28",
+    "highcharts": "^8.2.2",
+    "highcharts-react-official": "^3.0.0",
     "is-mobile": "^2.2.1",
     "notistack": "^0.9.17",
     "react": "^16.13.1",
