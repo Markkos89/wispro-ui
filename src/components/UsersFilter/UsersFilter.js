@@ -6,43 +6,26 @@ export default ({originalUserList, setFiltredUsersList}) => {
   const [search, setSearch] = React.useState('')
 
   useEffect(()=> {
-
-    const filterUsers = (usersList) => {
-      return (
-        usersList.filter(user => {
-          return user.firstname.includes(search) || user.lastname.includes(search)
-        })
+    const filterUsers = usersList => {
+      const idx = search.length
+      const mayusValue = search.toUpperCase()
+      
+      return usersList.filter(user =>
+        ((user.firstname.toUpperCase().slice(0, idx)) === mayusValue) || ((user.lastname.toUpperCase().slice(0, idx)) === mayusValue)
       )
     }
-
-    const orderUsers = (usersList) => {
-      if(orderBy === 'firstname'){
-        return ([...usersList].sort((a, b) => {
-          return a.firstname.toLowerCase().localeCompare(b.firstname.toLowerCase())
-        }))
-      }else if(orderBy === 'lastname'){
-        return ([...usersList].sort((a, b) => {
-          return a.lastname.toLowerCase().localeCompare(b.lastname.toLowerCase())
-        }))
-      }else if(orderBy === 'dni'){
-        return ([...usersList].sort((a, b) => {
-          return a.dni - b.dni
-        }))
-      }else if(orderBy === 'createdAt'){
-        return ([...usersList].sort((a, b) => {
-          const dateA = new Date(a.createdAt)
-          const dateB = new Date(b.createdAt)
   
-          return dateA > dateB ? 1 :
-            dateB > dateA ? -1 :
-            0
-        }))
-      }else if(orderBy === ''){
-        return usersList
-      }else if(orderBy === '' && search === ''){
-        return originalUserList
-      }
-
+    const orderUsers = usersList => {
+      const sortByName = (name, a, b) => a[name].toLowerCase().localeCompare(b[name].toLowerCase())
+  
+      if(orderBy === 'firstname' || orderBy === 'lastname') return usersList.sort((a, b) => sortByName(orderBy, a, b))
+      if(orderBy === 'dni') return usersList.sort((a, b) => a.dni - b.dni)
+      if(orderBy === 'createdAt') return usersList.sort((a, b) => {
+        const dateA = new Date(a.createdAt)
+        const dateB = new Date(b.createdAt)
+        return dateA > dateB ? 1 :
+          dateB > dateA ? -1 : 0
+      })
       return usersList
     }
 
@@ -51,7 +34,6 @@ export default ({originalUserList, setFiltredUsersList}) => {
         filterUsers(originalUserList)
       )
     )
-
   }, [orderBy, search, originalUserList, setFiltredUsersList])
 
 
@@ -60,7 +42,7 @@ export default ({originalUserList, setFiltredUsersList}) => {
       <Form.Control as="input" placeholder="Buscar por nombre o apellido" onChange={(event) => setSearch(event.target.value)} value={search}></Form.Control>
     </Col>
     <Col xs={3}>
-      <Form.Control as='select' onChange={(event) => setOrderBy(event.target.value)} defaultValue={orderBy}>
+      <Form.Control as='select' onChange={(event) => setOrderBy(event.target.value)} value={orderBy}>
         <option value=''>Ordenar por...</option>
         <option value='firstname'>Nombre</option>
         <option value='lastname'>Apellido</option>
