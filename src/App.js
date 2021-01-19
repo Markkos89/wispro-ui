@@ -26,7 +26,7 @@ function App() {
               {publicRoutes.map(route => <Route {...route} key={route.path || '#'}/>)}
             </Switch>
           </Router>
-        </Provider>,
+        </Provider>
     </RecoilRoot>
   );
 }

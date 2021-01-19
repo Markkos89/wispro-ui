@@ -1,23 +1,15 @@
-/* eslint-disable react/jsx-no-bind */
-/* eslint-disable react/sort-comp */
-/* eslint-disable react/destructuring-assignment */
-/* eslint-disable react/no-access-state-in-setstate */
-/* eslint-disable react/state-in-constructor */
 import React, { useState, useEffect } from "react";
-import { Row, Col, Container, Button, Table } from "react-bootstrap";
+import { Row, Col, Container, Table } from "react-bootstrap";
 import styled from "styled-components";
-import SearchBar from "../../components/SearchBar";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
-// import TableTemplate from "../../components/Tables/TableTemplate";
-import { useHistory } from "react-router-dom";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faTrash, faChartLine } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "./ModalModifyCandidate";
-import ModalModifyInterviews from "./ModalModifyInterviews";
-// import Swal from "sweetalert2";
+import UsersFilter from '../../components/UsersFilter'
+import DeleteUserModal from '../../components/DeleteUserModal'
+import isObjectEmpty from "utils/isObjectEmpty";
+import UserStatiticsModal from '../../components/UserStatiticsModal'
 
-const H1 = styled.h1`
-  font-size: 2em;
-`;
+import accessData from '../../data/access.json'
 
 const StyleDashboard = styled.div`
   display: flex;
@@ -35,197 +27,106 @@ const StyleTable = styled.div`
   margin-top: 50px;
 `;
 
-const StyleSearch = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  margin-top: 150px;
-  margin-right: auto;
-`;
-
 const DashboardPage = ({
   getCandidates,
-  getAllData,
-  getAllLoading,
-  getAllError,
-  updateCandidate,
-  updateCandidateData,
-  updateCandidateError,
+  getAllData
 }) => {
-  const history = useHistory();
-  const [candidates, setCandidates] = useState([]);
-  const [filterValue, setFilterValue] = useState("");
-  const [filterCandidates, setFilterCandidates] = useState([]);
-  const [showModalModify, setShowModalModify] = useState(false);
-  const [candidateToModify, setCandidateToModify] = useState([]);
-  const [skills, setSkills] = useState([]);
-  const [interviews, setInterviews] = useState([]);
-  const [
-    candidateToModifyInterviews,
-    setCandidateToModifyInterviews,
-  ] = useState([]);
-  const [showModalModifyInterviews, setShowModalModifyInterviews] = useState(
-    false
-  );
-  const [linkedin, setLinkedin] = useState("");
-  const [github, setGithub] = useState("");
+  const [usuarios, setUsuarios] = useState([])
+  const [usuariosFilter, setUsuariosFilter] = useState([])
+  const [candidateToModify, setCandidateToModify] = useState({})
+  const [userToDelete, setUserToDelete] = useState({})
+  const [userAccessToView, setUserAccessToView] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getCandidates();
-      console.log(response);
+      await getCandidates();
     }
     fetchData();
-  }, [getCandidates]);
+  }, [getCandidates])
 
   useEffect(() => {
-    setCandidates(getAllData);
-  }, [getAllData]);
+    setUsuarios(getAllData);
+  }, [getAllData])
 
-  // useEffect(() => {
-  //   if (updateCandidateData.length && updateCandidateError === "")
-  //     Swal.fire("Exito!", "El registro se actualizó correctamente.", "success");
-  //   else Swal.fire("Error!", updateCandidateError, "error");
-  // }, [updateCandidateData, updateCandidateError]);
+  useEffect(() => setUsuariosFilter(usuarios), [usuarios])
 
-  useEffect(() => {
-    setFilterCandidates(
-      candidates.filter((candidate) => {
-        return (
-          (candidate &&
-            candidate.name &&
-            candidate.name.includes(filterValue)) ||
-          (candidate &&
-            candidate.habilities &&
-            candidate.habilities.includes(filterValue))
-        );
+
+
+  const updateCandidate = updatedUser => {
+
+    setUsuarios(prevState => prevState.map(user => {
+      if(user.id === updatedUser.id) return {
+        ...updatedUser,
+        updatedAt: new Date().toISOString()
+      }
+      return user
+    }))
+    setCandidateToModify({})
+  }
+
+  const deleteCandidate = () => {
+    setUsuarios(prevState => prevState.filter(user => user.id !== userToDelete.id))
+    setUserToDelete({})
+  };
+
+  const handleAccessButton = userId => {
+    setUserAccessToView(
+      accessData.filter(access => access.userId === userId).sort((a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+
+        return dateA > dateB ? 1 :
+          dateB > dateA ? -1 : 0
       })
-    );
-  }, [filterValue, candidates]);
-
-  // const deleteEmployee = (id) => {
-  //   const confirmDelete = window.confirm("Delete employee forever?");
-  //   if (confirmDelete) {
-  //     axios
-  //       .delete(`${url}/${id}`)
-  //       .then((res) => console.log(res.data))
-  //       .then(() => setCandidates(candidates.filter((el) => el.id !== id)));
-  //   }
-  // };
-
-  const openAddFormHandler = () => {
-    history.replace("/add-candidate");
-  };
-
-  const handleModifyCandidate = (candidate) => {
-    setCandidateToModify(candidate);
-    setSkills(
-      candidate.habilities.map((hab) => {
-        return { value: hab, label: hab };
-      })
-    );
-    setGithub(candidate.github);
-    setLinkedin(candidate.linkedin);
-    setShowModalModify(true);
-  };
-
-  const handleInterviewsCandidate = (candidate) => {
-    setCandidateToModifyInterviews(candidate);
-    setInterviews(candidate.interviews);
-    setShowModalModifyInterviews(true);
-  };
-
-  const handleDeleteCandidate = () => {
-    console.log("handleDeleteCandidate");
-  };
-
-  const handleCloseModalModifyCandidate = () => {
-    setShowModalModify(false);
-  };
-
-  const handleCloseModalModifyInterviews = () => {
-    setShowModalModifyInterviews(false);
-  };
-
-  const handleAddInterviewRow = (interviews) => {
-    const newInterviewsRow = { pregunta: "", respuesta: "" };
-    setInterviews([...interviews, newInterviewsRow]);
-  };
+    )
+  }
 
   return (
-    <>
+    <React.Fragment>
       <StyleDashboard>
-        <StyleSearch>
-          <SearchBar
-            value={filterValue}
-            employees={candidates}
-            changeHandler={setFilterValue}
-          />
-        </StyleSearch>
         <StyleTable>
           <Container>
             <Row>
-              <Col xs={5} sm={5}>
-                <Button
-                  variant="primary"
-                  size="sm"
-                  onClick={openAddFormHandler}
-                >
-                  Agregar Candidato
-                </Button>
-              </Col>
-              <Col xs={7} sm={7}>
-                <H1>Lista de Candidatos</H1>
+              <Col>
+                <h1>Lista de Candidatos</h1>
               </Col>
             </Row>
+            <UsersFilter
+              originalUserList={usuarios}
+              setFiltredUsersList={setUsuariosFilter}
+            />
             <Row>
               <Col xs={12} sm={12} className="text-center">
-                <Table striped bordered hover>
+                <Table striped bordered hover responsive>
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Name</th>
-                      <th>Titulo</th>
-                      <th>Skills</th>
-                      <th>Provincia</th>
-                      <th>Ciudad</th>
-                      <th>Pais</th>
+                      <th>Nombre</th>
+                      <th>Apellido</th>
+                      <th>DNI</th>
+                      <th>E-mail</th>
+                      <th>Direccion</th>
+                      <th>Fecha de alta</th>
                       <th colSpan="3">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {filterCandidates &&
-                      filterCandidates.map((candidate, index) => {
+                    {usuariosFilter.map((candidate, index) => {
                         return (
-                          <tr key={index}>
+                          <tr key={candidate.id}>
                             <td>{index + 1}</td>
-                            <td>{candidate.name}</td>
-                            <td>{candidate.profession}</td>
-                            <td>
-                              {candidate.habilities.map((el) => {
-                                return el + ", ";
-                              })}
-                            </td>
-                            <td>{candidate.province}</td>
-                            <td>{candidate.city}</td>
-                            <td>{candidate.country}</td>
-                            <td>
-                              <ButtonWithIconAndTooltip
-                                icon={faEdit}
-                                placement="top"
-                                variant="primary"
-                                fn={() => handleInterviewsCandidate(candidate)}
-                                btnSize="sm"
-                                tooltipText="Entrevistas/Notas"
-                              />
-                            </td>
+                            <td>{candidate.firstname}</td>
+                            <td>{candidate.lastname}</td>
+                            <td>{candidate.dni}</td>
+                            <td>{candidate.email}</td>
+                            <td>{candidate.address}</td>
+                            <td>{new Date(candidate.createdAt).toLocaleDateString()}</td>
                             <td>
                               <ButtonWithIconAndTooltip
                                 icon={faEdit}
                                 placement="top"
                                 variant="warning"
-                                fn={() => handleModifyCandidate(candidate)}
+                                fn={() => setCandidateToModify(candidate)}
                                 btnSize="sm"
                                 tooltipText="Modificar Candidato"
                               />
@@ -235,9 +136,19 @@ const DashboardPage = ({
                                 icon={faTrash}
                                 placement="top"
                                 variant="danger"
-                                fn={() => handleDeleteCandidate()}
+                                fn={() => setUserToDelete(candidate)}
                                 btnSize="sm"
                                 tooltipText="Eliminar Candidato"
+                              />
+                            </td>
+                            <td>
+                              <ButtonWithIconAndTooltip
+                                icon={faChartLine}
+                                placement="top"
+                                variant="primary"
+                                fn={() => handleAccessButton(candidate.id)}
+                                btnSize="sm"
+                                tooltipText="Ver accesos"
                               />
                             </td>
                           </tr>
@@ -251,27 +162,23 @@ const DashboardPage = ({
         </StyleTable>
       </StyleDashboard>
       <ModalModifyCandidate
-        show={showModalModify}
-        handleClose={handleCloseModalModifyCandidate}
+        show={!isObjectEmpty(candidateToModify)}
+        handleClose={() => setCandidateToModify({})}
         candidate={candidateToModify}
-        skills={skills}
-        setSkills={setSkills}
         updateCandidate={updateCandidate}
-        linkedin={linkedin}
-        setLinkedin={setLinkedin}
-        github={github}
-        setGithub={setGithub}
       />
-      <ModalModifyInterviews
-        interviews={interviews}
-        setInterviews={setInterviews}
-        show={showModalModifyInterviews}
-        handleClose={handleCloseModalModifyInterviews}
-        candidate={candidateToModifyInterviews}
-        updateCandidate={updateCandidate}
-        handleAddInterviewRow={handleAddInterviewRow}
+      <DeleteUserModal
+        show={!isObjectEmpty(userToDelete)}
+        user={userToDelete}
+        deleteUser={deleteCandidate}
+        handleClose={() => setUserToDelete({})}
       />
-    </>
+      <UserStatiticsModal
+        show={userAccessToView.length ? true : false}
+        accessData={userAccessToView}
+        handleClose={() => setUserAccessToView([])}
+      />
+    </React.Fragment>
   );
 };
 

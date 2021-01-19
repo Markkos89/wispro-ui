@@ -1,189 +1,127 @@
-import React, { useEffect } from "react";
-import { Modal, Button, Form, Col } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Modal, Button, Form, Col, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
-import Select from "react-select";
+import isObjectEmpty from '../../../utils/isObjectEmpty'
 
 const ModalModifyCandidate = ({
   show,
   handleClose,
   candidate,
-  skills,
-  setSkills,
-  updateCandidate,
-  linkedin,
-  setLinkedin,
-  github,
-  setGithub,
+  updateCandidate
 }) => {
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, formState } = useForm();
+  const [formErrors, setFormErrors] = useState({})
 
-  const options = [
-    { value: "react", label: "react" },
-    { value: "nodejs", label: "nodejs" },
-    { value: "javascript", label: "javascript" },
-    { value: "angular", label: "angular" },
-    { value: "git", label: "git" },
-    { value: "github", label: "github" },
-    { value: "git flow", label: "git flow" },
-    { value: "redux", label: "redux" },
-    { value: "redux-thunk", label: "redux-thunk" },
-    { value: "html5", label: "html5" },
-    { value: "css3", label: "css3" },
-    { value: "vuejs", label: "vuejs" },
-    { value: "MongoDB", label: "MongoDB" },
-    { value: "Mongoose", label: "Mongoose" },
-    { value: "MySQL", label: "MySQL" },
-    { value: "SQL Server", label: "SQL Server" },
-    { value: "ORM", label: "ORM" },
-    { value: "Sequelize", label: "Sequelize" },
-    { value: "SCRUM", label: "SCRUM" },
-  ];
+  const onSubmit = async data => updateCandidate(data)
 
-  useEffect(() => {
-    if (candidate.linkedin !== "") setLinkedin(candidate.linkedin);
-    if (candidate.github !== "") setGithub(candidate.github);
-  }, [candidate, setLinkedin, setGithub]);
-
-  const onSubmit = async (data) => {
-    if (!data) {
-      Swal.fire(
-        "Error!",
-        "Al menos un campo de busqueda debe estar completo",
-        "error"
-      );
-    } else {
-      data.habilities = skills;
-      data.linkedin = linkedin;
-      data.github = github;
-      console.log(data);
-      await updateCandidate(data);
-
-      handleClose();
-    }
-  };
-
-  const onChangeHabilities = (value) => {
-    setSkills(value);
-  };
+  useEffect(() => setFormErrors(formState.errors), [formState])
 
   return (
-    <Modal show={show} onHide={handleClose} size="lg">
-      <Modal.Header closeButton>
+    <Modal show={show} size="lg">
+      <Modal.Header closeButton onHide={handleClose}>
         <Modal.Title>Modificar Candidato</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input
           hidden
-          id="candidateId"
-          name="candidateId"
+          id="userId"
+          name="id"
           defaultValue={candidate.id}
+          ref={register({
+            valueAsNumber: true
+          })}
+        />
+        <input
+          hidden
+          name='createdAt'
+          defaultValue={candidate.createdAt}
           ref={register}
         />
+
         <Modal.Body>
           <Form.Row>
-            <Form.Group as={Col} controlId="formGridEmail">
+            <Form.Group as={Col}>
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Nombre Completo"
-                defaultValue={candidate.name}
-                ref={register}
-                name="name"
+                defaultValue={candidate.firstname}
+                name="firstname"
+                ref={register({
+                  minLength: {value: 2, message: 'El nombre debe tener al menos 2 caracteres'},
+                  maxLength: {value: 100, message: 'El nombre no puede tener mas de 100 caracteres'},
+                  required: {value: true, message: 'Se requiere nombre'}
+                })}
               />
             </Form.Group>
-            <Form.Group as={Col} controlId="formGridPassword">
+            <Form.Group as={Col}>
+              <Form.Label>Apellido</Form.Label>
+              <Form.Control
+                type="text"
+                name="lastname"
+                defaultValue={candidate.lastname}
+                ref={register({
+                  minLength: {value: 2, message: 'El apellido debe tener al menos 2 caracteres'},
+                  maxLength: {value: 50, message: 'El apellido no puede tener mas de 50 caracteres'},
+                  required: {value: true, message: 'Se requiere apellido'}
+                })}
+              />
+            </Form.Group>
+          </Form.Row>
+          <Form.Row>
+            <Form.Group as={Col}>
               <Form.Label>Email</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="E-mail"
-                ref={register}
                 name="email"
                 defaultValue={candidate.email}
-              />
-            </Form.Group>
-          </Form.Row>
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridAddress1">
-              <Form.Label>Titulo</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Titulo profesional"
-                ref={register}
-                name="profession"
-                defaultValue={candidate.profession}
+                ref={register({
+                  pattern: {value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, message: 'El email no es valido'},
+                  required: {value: true, message: 'Se requiere un email'}
+                })}
               />
             </Form.Group>
 
-            <Form.Group as={Col} controlId="formGridAddress2">
-              <Form.Label>Skills</Form.Label>
-              <Select
-                required
-                name="habilities"
-                defaultValue={skills.length && skills}
-                onChange={onChangeHabilities}
-                options={options}
-                isMulti
+            <Form.Group as={Col}>
+              <Form.Label>DNI</Form.Label>
+              <Form.Control
+                type='number'
+                name="dni"
+                defaultValue={candidate.dni}
+                ref={register({
+                  max: {value: 100000000, message: 'El DNI no puede ser mayor a 100.000.000'},
+                  min: {value: 1000000, message: 'El DNI no puede ser menor a 1.000.000'},
+                  required: {value: true, message: 'Se requiere DNI'},
+                  valueAsNumber: true
+                })}
               />
             </Form.Group>
           </Form.Row>
-          <Form.Group controlId="addLinkedin">
-            <Form.Label>Linkedin</Form.Label>
+          <Form.Group>
+            <Form.Label>Direccion</Form.Label>
             <Form.Control
-              required
               type="text"
-              name="linkedin"
-              placeholder="Ingrese el link a Linkedin"
-              value={linkedin}
-              onChange={(e) => setLinkedin(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group controlId="addGithub">
-            <Form.Label>Github</Form.Label>
-            <Form.Control
-              required
-              type="text"
-              name="github"
-              placeholder="Ingrese el link a Github"
-              value={github}
-              onChange={(e) => setGithub(e.target.value)}
+              name="address"
+              defaultValue={candidate.address}
+              ref={register({
+                minLength: {value: 3, message: 'La direccion debe tener al menos 3 caracteres'},
+                maxLength: {value: 100, message: 'La direccion no puede tener mas de 100 caracteres'},
+                required: {value: true, message: 'Se requiere una direccion'}
+              })}
             />
           </Form.Group>
 
-          <Form.Row>
-            <Form.Group as={Col} controlId="formGridCity">
-              <Form.Label>Ciudad</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese la ciudad"
-                ref={register}
-                name="city"
-                defaultValue={candidate.city}
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridState">
-              <Form.Label>Provincia</Form.Label>
-              <Form.Control
-                type="text"
-                defaultValue={candidate.province}
-                ref={register}
-                name="province"
-              />
-            </Form.Group>
-
-            <Form.Group as={Col} controlId="formGridZip">
-              <Form.Label>Pais</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ingrese el pais"
-                ref={register}
-                name="country"
-                defaultValue={candidate.country}
-              />
-            </Form.Group>
-          </Form.Row>
+          
+          {!isObjectEmpty(formErrors) && 
+            <Alert variant='danger' className='text-left'>
+              <ul>
+                {
+                  Object.values(formErrors).map((error, idx) => <li key={idx}>{error.message}</li>)
+                }
+              </ul>
+            </Alert>
+          }
         </Modal.Body>
+
         <Modal.Footer>
           <Button variant="secondary" type="button" onClick={handleClose}>
             Cerrar

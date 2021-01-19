@@ -1,4 +1,5 @@
 import clienteAxios from "../api/axios";
+import MockUsers from '../data/users'
 
 export const candidateService = {
   postCandidate,
@@ -21,7 +22,7 @@ async function postCandidate(data) {
 }
 
 async function getCandidates() {
-  try {
+  /* try {
     const response = await clienteAxios.get(`/v1/candidates`);
     if (response.status === 200) {
       return response.data;
@@ -31,7 +32,8 @@ async function getCandidates() {
   } catch (error) {
     console.log(error);
     return error;
-  }
+  } */
+  return MockUsers
 }
 
 async function updateCandidate(data) {
