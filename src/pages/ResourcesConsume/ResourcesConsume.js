@@ -15,14 +15,14 @@ export default () => {
 
       Object.keys(data).forEach(resource => {
         if(resource === 'cpu'){
-          const serie = CPUchartRef.current.chart.series[0]
-          serie.addPoint(data.cpu, true, serie.data.length > 25)
+          const [serie] = CPUchartRef.current.chart.series
+          serie.addPoint(data[resource], true, serie.data.length > 25)
         }else if (resource === 'ram'){
-          const serie = RAMchartRef.current.chart.series[0]
-          serie.addPoint(data.ram, true, serie.data.length > 25)
+          const [serie] = RAMchartRef.current.chart.series
+          serie.addPoint(data[resource], true, serie.data.length > 25)
         }else if (resource === 'red'){
-          const serie = REDchartRef.current.chart.series[0]
-          serie.addPoint(data.red, true, serie.data.length > 25)
+          const [serie] = REDchartRef.current.chart.series
+          serie.addPoint(data[resource], true, serie.data.length > 25)
         }
       })
     })
