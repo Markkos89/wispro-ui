@@ -11,6 +11,11 @@ const routes = [
     component: asyncComponentLoader(() => import("../../pages/DashboardPage")),
     path: "/dashboard",
   },
+  {
+    exact: true,
+    component: asyncComponentLoader(() => import("../../pages/ResourcesConsume")),
+    path: "/resources",
+  },
 ];
 
 export default routes;
