@@ -1,4 +1,5 @@
 import React, { Suspense, useState, useEffect, lazy } from 'react';
+import { Container } from 'react-bootstrap';
 
 import { sleep } from 'utils';
 
@@ -107,7 +108,7 @@ const asyncComponentLoader = (
 
   const Fallback = loaderOptions.delay
     ? getDelayedFallback(FallbackWaiting, loaderOptions.delay)
-    : FallbackWaiting;
+    : <Container><FallbackWaiting/></Container>;
 
   const LazyComponent = getLazyComponent(
     loadComponent,
