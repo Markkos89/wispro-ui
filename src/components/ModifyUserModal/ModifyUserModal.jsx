@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Col, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import isObjectEmpty from '../../../utils/isObjectEmpty'
+import isObjectEmpty from '../../utils/isObjectEmpty'
 
 const ModalModifyCandidate = ({
   show,

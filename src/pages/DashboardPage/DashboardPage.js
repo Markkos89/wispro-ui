@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Table } from "react-bootstrap";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
 import { faEdit, faTrash, faChartLine } from "@fortawesome/free-solid-svg-icons";
-import ModalModifyCandidate from "./ModalModifyCandidate";
+import ModalModifyCandidate from "../../components/ModifyUserModal";
 import UsersFilter from '../../components/UsersFilter'
 import DeleteUserModal from '../../components/DeleteUserModal'
 import isObjectEmpty from "utils/isObjectEmpty";
