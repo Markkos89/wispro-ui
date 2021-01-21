@@ -51,7 +51,6 @@ const DashboardPage = ({
   useEffect(() => setUsuariosFilter(usuarios), [usuarios])
 
 
-
   const updateCandidate = updatedUser => {
 
     setUsuarios(prevState => prevState.map(user => {

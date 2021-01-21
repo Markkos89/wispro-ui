@@ -1,14 +1,12 @@
 import { userConstants } from "./constants";
 import { userService } from "../../services";
 import { history } from "../../helpers";
-// import Swal from 'sweetalert2';
 
 export const login = (email, password) => async (dispatch) => {
   dispatch(request(email));
   try {
     const data = await userService.login(email, password);
     dispatch(success(data));
-    // history.push('/dashboard');
   } catch (error) {
     dispatch(failure(error.toString()));
   }
