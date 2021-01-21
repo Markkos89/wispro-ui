@@ -12,7 +12,6 @@ async function login(email, password) {
       password,
     };
     const response = await clienteAxios.post(`/v1/auth/login`, data);
-    // console.log(response)
     if (response.status === 200) {
       localStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
@@ -24,6 +23,5 @@ async function login(email, password) {
 }
 
 function logout() {
-  // remove user from local storage to log user out
   localStorage.removeItem("user");
 }

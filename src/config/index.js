@@ -1,6 +1,4 @@
-/* set your data here */
 const email = 'super-email-of-the-auther@gmail.com';
-/* ***************** */
 
 const messages = {
   app: {

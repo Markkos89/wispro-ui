@@ -116,8 +116,7 @@ const LoginPage = ({login, logout, loggedIn}) => {
     if(loggedIn){
       history.push('/dashboard');
     }
-    // eslint-disable-next-line
-  }, [loggedIn])
+  }, [loggedIn, history])
 
   return (
     <StyleLogin>
