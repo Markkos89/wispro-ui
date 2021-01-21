@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Modal, Button, Form, Col, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import isObjectEmpty from '../../../utils/isObjectEmpty'
+import isObjectEmpty from '../../utils/isObjectEmpty'
 
 const ModalModifyCandidate = ({
   show,
@@ -123,10 +123,10 @@ const ModalModifyCandidate = ({
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={handleClose}>
+          <Button variant="outline-secondary" type="button" onClick={handleClose}>
             Cerrar
           </Button>
-          <Button variant="primary" type="submit">
+          <Button variant="dark" type="submit">
             Guardar Cambios
           </Button>
         </Modal.Footer>

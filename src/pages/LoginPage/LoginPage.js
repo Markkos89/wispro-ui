@@ -55,17 +55,6 @@ const StyleLogin = styled.div`
   }
 `;
 
-const ContentButtons = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 30px;
-  width: 100%;
-
-  & .style-button-cancel {
-    background: #de5a21;
-  }
-`;
 
 const LoginPage = ({login, logout, loggedIn}) => {
 
@@ -99,7 +88,6 @@ const LoginPage = ({login, logout, loggedIn}) => {
       email: '',
       password: ''
     });
-
   }
 
   const handleSubmit = () => {
@@ -207,33 +195,23 @@ const LoginPage = ({login, logout, loggedIn}) => {
                     onChange={onChangePassword}
                   />
                   <Button
-                    className="button-show-hide"
                     size="sm"
+                    variant='secondary'
                     onClick={() => { setShowPassword(!showPassword) }}>
                     {showPassword ? 'hide' : 'show'}
                   </Button>
                 </Form.Group>
             </Form.Group>
           </Form>
-          <ContentButtons>
-            <Button
-              className="style-button-cancel"
-              variant="danger"
-              size="sm"
-              onClick={onReset}
-            >
-              Cancel
-            </Button>
-            <Button
-              variant="success"
-              className="style-button-submit"
-              size="sm"
-              type="submit"
-              onClick={handleSubmit}
-            >
-              Submit
-            </Button>
-          </ContentButtons>
+          <Button
+            variant="dark"
+            className='float-right'
+            size="sm"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            Entrar
+          </Button>
         </Container>
       </Card>
     </StyleLogin>

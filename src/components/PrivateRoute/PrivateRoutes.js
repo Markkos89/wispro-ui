@@ -1,5 +1,6 @@
 import NavBar from "components/NavBar/NavBar";
 import React from "react";
+import { Container } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Route, Redirect } from "react-router-dom";
 
