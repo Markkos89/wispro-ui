@@ -123,10 +123,10 @@ const ModalModifyCandidate = ({
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" type="button" onClick={handleClose}>
+          <Button variant="outline-secondary" type="button" onClick={handleClose}>
             Cerrar
           </Button>
-          <Button variant="primary" type="submit">
+          <Button variant="dark" type="submit">
             Guardar Cambios
           </Button>
         </Modal.Footer>
