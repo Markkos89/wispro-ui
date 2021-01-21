@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Row, Col, Table } from "react-bootstrap";
+import { Row, Col, Table, Container } from "react-bootstrap";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
 import { faEdit, faTrash, faChartLine } from "@fortawesome/free-solid-svg-icons";
 import ModalModifyCandidate from "../../components/ModifyUserModal";
@@ -64,7 +64,7 @@ const DashboardPage = ({
   }
 
   return (
-    <React.Fragment>
+    <Container>
       <Row>
         <Col>
           <h1 className='text-center mt-3'>Lista de Candidatos</h1>
@@ -154,7 +154,7 @@ const DashboardPage = ({
         accessData={userAccessToView}
         handleClose={() => setUserAccessToView([])}
       />
-    </React.Fragment>
+    </Container>
   );
 };
 
