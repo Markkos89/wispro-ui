@@ -16,13 +16,13 @@ export default () => {
       Object.keys(data).forEach(resource => {
         if(resource === 'cpu'){
           const [serie] = CPUchartRef.current.chart.series
-          serie.addPoint(data[resource], true, serie.data.length > 25)
+          serie.addPoint([data.time, data[resource]], true, serie.data.length > 25)
         }else if (resource === 'ram'){
           const [serie] = RAMchartRef.current.chart.series
-          serie.addPoint(data[resource], true, serie.data.length > 25)
+          serie.addPoint([data.time, data[resource]], true, serie.data.length > 25)
         }else if (resource === 'red'){
           const [serie] = REDchartRef.current.chart.series
-          serie.addPoint(data[resource], true, serie.data.length > 25)
+          serie.addPoint([data.time, data[resource]], true, serie.data.length > 25)
         }
       })
     })
@@ -34,7 +34,8 @@ export default () => {
     chart: {
       type: 'areaspline',
       marginRight: 10,
-      animation: true
+      animation: true,
+      backgroundColor: '#F8F9FA'
     },
     title: {
       text: `consumo de ${typeResource.toUpperCase()}`
@@ -54,6 +55,11 @@ export default () => {
     xAxis: {
       labels: {
         enabled: false
+      }
+    },
+    plotOptions: {
+      series: {
+        color: '#6C757D'
       }
     }
   })

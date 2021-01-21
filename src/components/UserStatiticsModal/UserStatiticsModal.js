@@ -8,7 +8,8 @@ export default ({accessData, show, handleClose}) => {
   const getHighchartsOptios = () => ({
     title: '',
     chart: {
-      type: 'line'
+      type: 'line',
+      backgroundColor: '#F8F9FA'
     },
     series: [
       {
@@ -33,6 +34,11 @@ export default ({accessData, show, handleClose}) => {
           }
         }
       ]
+    },
+    plotOptions: {
+      series: {
+        color: '#495057'
+      }
     }
   })
 
