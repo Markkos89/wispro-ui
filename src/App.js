@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { RecoilRoot } from 'recoil';
-//import CssBaseline from '@material-ui/core/CssBaseline';
 
 import withErrorHandler from 'errorHandling';
 import { App as ErrorBoundaryFallback } from 'errorHandling/Fallbacks';
@@ -16,9 +15,9 @@ import { store } from './redux/store'
 import PrivateRoute from './components/PrivateRoute/PrivateRoutes'
 
 function App() {
+
   return (
     <RecoilRoot>
-        {/* <CssBaseline /> */}
         <Provider store={store}>  
           <Router>
             <Switch>

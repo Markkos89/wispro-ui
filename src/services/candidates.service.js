@@ -22,17 +22,6 @@ async function postCandidate(data) {
 }
 
 async function getCandidates() {
-  /* try {
-    const response = await clienteAxios.get(`/v1/candidates`);
-    if (response.status === 200) {
-      return response.data;
-    } else {
-      console.log("otro status");
-    }
-  } catch (error) {
-    console.log(error);
-    return error;
-  } */
   return MockUsers
 }
 

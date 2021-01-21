@@ -1,7 +1,6 @@
 import React from "react";
 import { Modal, Button, Form, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Swal from "sweetalert2";
 import { ButtonWithIconAndTooltip } from "../../../components/ButtonWithIconAndTooltip";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
@@ -16,21 +15,9 @@ function ModalModifyCandidate({
   const { register, handleSubmit } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("data");
-    console.log(data);
-    if (!data) {
-      Swal.fire(
-        "Error!",
-        "Al menos un campo de busqueda debe estar completo",
-        "error"
-      );
-    } else {
-      console.log(data);
-      await updateCandidate(data);
-      // Swal.fire("Exito!", "El registro se actualizó correctamente.", "success");
-      handleClose();
-    }
-  };
+    await updateCandidate(data);
+    handleClose();
+  }
 
   return (
     <Modal show={show} onHide={handleClose} size="lg">

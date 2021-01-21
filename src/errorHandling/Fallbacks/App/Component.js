@@ -1,39 +1,24 @@
 import React from 'react';
-
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-
-import { FaRedo as ResetIcon } from 'react-icons/fa';
-
+import { faRedo as ResetIcon } from '@fortawesome/free-solid-svg-icons'
 import { resetApp } from 'utils';
 import { messages, email } from 'config';
+import { Container, Button } from 'react-bootstrap';
 
-import useStyles from './styles';
+const AppErrorBoundaryFallback = () => <Container>
+  <h5>{messages.app.crash.title}</h5>
 
-function AppErrorBoundaryFallback() {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.wrapper}>
-      <Paper className={classes.paper}>
-        <Typography variant="h5" component="h3">
-          {messages.app.crash.title}
-        </Typography>
-        <div className={classes.buttons}>
-          <div>
-            <Button target="_blank" rel="noreferrer" href={`mailto: ${email}`}>
-              {messages.app.crash.options.email}
-            </Button>
-          </div>
-          <Typography component="h6">or</Typography>
-          <div>
-            <Button onClick={resetApp}>{messages.app.crash.options.reset} <ResetIcon /></Button>
-          </div>
-        </div>
-      </Paper>
+  <div className='mt-5'>
+    <div>
+      <Button target="_blank" rel="noreferrer" href={`mailto: ${email}`}>
+        {messages.app.crash.options.email}
+      </Button>
     </div>
-  );
-}
+    <h6>or</h6>
+    <div>
+      <Button onClick={resetApp}>{messages.app.crash.options.reset} <ResetIcon /></Button>
+    </div>
+  </div>
+
+</Container>
 
 export default AppErrorBoundaryFallback;
