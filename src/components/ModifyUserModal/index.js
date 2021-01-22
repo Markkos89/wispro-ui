@@ -1,3 +1,3 @@
-import ModalModifyUser from "./ModifyUserModal";
+import ModalModifyUser from './ModifyUserModal'
 
-export default ModalModifyUser;
+export default ModalModifyUser

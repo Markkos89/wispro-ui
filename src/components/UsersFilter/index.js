@@ -1,3 +1,3 @@
-import UsersFilter from "./UsersFilter";
+import UsersFilter from './UsersFilter'
 
 export default UsersFilter

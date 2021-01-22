@@ -1,7 +1,7 @@
-import React, { Suspense, useState, useEffect, lazy } from 'react';
-import { Container } from 'react-bootstrap';
+import React, { Suspense, useState, useEffect, lazy } from 'react'
+import { Container } from 'react-bootstrap'
 
-import { sleep } from 'utils';
+import { sleep } from 'utils'
 
 // a little bit complex staff is going on here
 // let me explain it
@@ -25,15 +25,15 @@ import { sleep } from 'utils';
 // So, the implementation of it is here:
 
 const getDelayedFallback = (Fallback, delay) => props => {
-  const [isDelayPassed, setIsDelayPassed] = useState(false);
+  const [isDelayPassed, setIsDelayPassed] = useState(false)
 
   useEffect(() => {
-    const timerId = setTimeout(() => setIsDelayPassed(true), delay);
+    const timerId = setTimeout(() => setIsDelayPassed(true), delay)
 
-    return () => clearTimeout(timerId);
-  }, []);
+    return () => clearTimeout(timerId)
+  }, [])
 
-  return isDelayPassed && <Fallback {...props} />;
+  return isDelayPassed && <Fallback {...props} />
 }
 
 /* ================================================================================== */
@@ -49,47 +49,48 @@ const getDelayedFallback = (Fallback, delay) => props => {
 // The solution of the second problem is to set of a minimum timeout, which will
 // ensure that the falback component will be rendered for that minimum amount of time
 
-const getLazyComponent = (loadComponent, loaderOptions, FallbackFail) => lazy(() => {
-  // fix the moment of starting loading
-  const start = performance.now();
-  // start loading
-  return loadComponent()
-    .then(moduleExports => {
-      // loading is finished
-      const end = performance.now();
-      const diff = end - start;
+const getLazyComponent = (loadComponent, loaderOptions, FallbackFail) =>
+  lazy(() => {
+    // fix the moment of starting loading
+    const start = performance.now()
+    // start loading
+    return loadComponent()
+      .then(moduleExports => {
+        // loading is finished
+        const end = performance.now()
+        const diff = end - start
 
-      // first of all, let's remember that we also have `loaderOptions` optionally
-      // provided by user, it has `delay` and `minimumLoading`:
-      // 1) `delay` - if the loading process is finished during this amount of time
-      //    the user will not see the fallback component at all
-      // 2) `minimumLoading` - but if it appears, it will stay rendered for at least
-      //    this amount of time
+        // first of all, let's remember that we also have `loaderOptions` optionally
+        // provided by user, it has `delay` and `minimumLoading`:
+        // 1) `delay` - if the loading process is finished during this amount of time
+        //    the user will not see the fallback component at all
+        // 2) `minimumLoading` - but if it appears, it will stay rendered for at least
+        //    this amount of time
 
-      // so, according to above mentioned, there are three conditions we are interested in
-      // 1) when `diff` is less than `delay`; in this case, we will immediately return
-      //    the result, thereby we will prevent the rendering of the fallback
-      //    and the main component will be rendered
-      // 2) when `diff` is bigger than `delay` but less than `delay + minimumLoading`;
-      //    it means `fallback` component has already been rendering and we have to
-      //    wait (starting from this moment) for `delay + minimumLoading - diff`
-      //    amount of time
-      // 3) when `diff` is bigger than `delay + minimumLoading`. It means we don't need to wait
-      //    anymore and we should immediately return the result as we do it in 1) case.
+        // so, according to above mentioned, there are three conditions we are interested in
+        // 1) when `diff` is less than `delay`; in this case, we will immediately return
+        //    the result, thereby we will prevent the rendering of the fallback
+        //    and the main component will be rendered
+        // 2) when `diff` is bigger than `delay` but less than `delay + minimumLoading`;
+        //    it means `fallback` component has already been rendering and we have to
+        //    wait (starting from this moment) for `delay + minimumLoading - diff`
+        //    amount of time
+        // 3) when `diff` is bigger than `delay + minimumLoading`. It means we don't need to wait
+        //    anymore and we should immediately return the result as we do it in 1) case.
 
-      // so, in the 1) and 3) cases we return the result immediately, and in 2) case we have to wait
-      // at least for `delay + minimumLoading - diff` amount of time
+        // so, in the 1) and 3) cases we return the result immediately, and in 2) case we have to wait
+        // at least for `delay + minimumLoading - diff` amount of time
 
-      const { delay, minimumLoading } = loaderOptions;
+        const { delay, minimumLoading } = loaderOptions
 
-      if ((diff < delay) || ((diff > delay) && (diff > delay + minimumLoading))) {
-        return moduleExports;
-      } else {
-        return sleep(delay + minimumLoading - diff).then(() => moduleExports);
-      }
-    })
-    .catch(() => ({ default: FallbackFail }));
-});
+        if (diff < delay || (diff > delay && diff > delay + minimumLoading)) {
+          return moduleExports
+        } else {
+          return sleep(delay + minimumLoading - diff).then(() => moduleExports)
+        }
+      })
+      .catch(() => ({ default: FallbackFail }))
+  })
 
 /* ================================================================================== */
 
@@ -103,24 +104,27 @@ const asyncComponentLoader = (
   loadComponent,
   loaderOptions,
   FallbackWaiting,
-  FallbackFail,
+  FallbackFail
 ) => props => {
-
-  const Fallback = loaderOptions.delay
-    ? getDelayedFallback(FallbackWaiting, loaderOptions.delay)
-    : <Container><FallbackWaiting/></Container>;
+  const Fallback = loaderOptions.delay ? (
+    getDelayedFallback(FallbackWaiting, loaderOptions.delay)
+  ) : (
+    <Container>
+      <FallbackWaiting />
+    </Container>
+  )
 
   const LazyComponent = getLazyComponent(
     loadComponent,
     loaderOptions,
-    FallbackFail,
-  );
+    FallbackFail
+  )
 
   return (
     <Suspense fallback={<Fallback />}>
       <LazyComponent {...props} />
     </Suspense>
-  );
-};
+  )
+}
 
-export default asyncComponentLoader;
+export default asyncComponentLoader

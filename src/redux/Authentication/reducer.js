@@ -1,7 +1,9 @@
-import { adminConstants } from '../Admin/constants';
+import { adminConstants } from '../Admin/constants'
 
-let admin = JSON.parse(localStorage.getItem('admin'));
-const initialState = admin ? { loggedIn: true, admin, loggingIn: false } : {loggedIn: false, loggingIn: false};
+let admin = JSON.parse(localStorage.getItem('admin'))
+const initialState = admin
+  ? { loggedIn: true, admin, loggingIn: false }
+  : { loggedIn: false, loggingIn: false }
 
 export function authentication(state = initialState, action) {
   switch (action.type) {
@@ -9,16 +11,16 @@ export function authentication(state = initialState, action) {
       return {
         loggingIn: true,
         admin: action.admin
-      };
+      }
     case adminConstants.LOGIN_SUCCESS:
       return {
         loggedIn: true,
         admin: action.admin
-      };
+      }
     case adminConstants.LOGIN_FAILURE:
-      return {};
+      return {}
     case adminConstants.LOGOUT:
-      return {};
+      return {}
     default:
       return state
   }

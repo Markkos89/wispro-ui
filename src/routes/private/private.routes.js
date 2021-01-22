@@ -1,16 +1,18 @@
-import { asyncComponentLoader } from "utils";
+import { asyncComponentLoader } from 'utils'
 
 const routes = [
   {
     exact: true,
-    component: asyncComponentLoader(() => import("../../pages/DashboardPage")),
-    path: "/dashboard",
+    component: asyncComponentLoader(() => import('../../pages/DashboardPage')),
+    path: '/dashboard'
   },
   {
     exact: true,
-    component: asyncComponentLoader(() => import("../../pages/ResourcesConsume")),
-    path: "/resources",
-  },
-];
+    component: asyncComponentLoader(() =>
+      import('../../pages/ResourcesConsume')
+    ),
+    path: '/resources'
+  }
+]
 
-export default routes;
+export default routes
