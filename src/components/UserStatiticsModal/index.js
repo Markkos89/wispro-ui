@@ -1,3 +1,3 @@
-import UserStatiticsModal from "./UserStatiticsModal";
+import UserStatiticsModal from './UserStatiticsModal'
 
 export default UserStatiticsModal

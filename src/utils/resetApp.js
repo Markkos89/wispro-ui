@@ -1,3 +1,3 @@
-const resetApp = () => window.location.reload();
+const resetApp = () => window.location.reload()
 
-export default resetApp;
+export default resetApp

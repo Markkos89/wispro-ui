@@ -1,3 +1,3 @@
-import DeleteUserModal from "./DeleteUserModal";
+import DeleteUserModal from './DeleteUserModal'
 
 export default DeleteUserModal

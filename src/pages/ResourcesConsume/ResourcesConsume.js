@@ -4,7 +4,7 @@ import { Col, Container, Row } from 'react-bootstrap'
 import Highcharts from 'highcharts'
 import HighchartsReact from 'highcharts-react-official'
 
-export default () => {  
+export default () => {
   const CPUchartRef = useRef(null)
   const RAMchartRef = useRef(null)
   const REDchartRef = useRef(null)
@@ -12,17 +12,28 @@ export default () => {
   useEffect(() => {
     const socket = ioClient('https://wisprotest-api.herokuapp.com')
     socket.on('resources-consume', data => {
-
       Object.keys(data).forEach(resource => {
-        if(resource === 'cpu'){
+        if (resource === 'cpu') {
           const [serie] = CPUchartRef.current.chart.series
-          serie.addPoint([data.time, data[resource]], true, serie.data.length > 25)
-        }else if (resource === 'ram'){
+          serie.addPoint(
+            [data.time, data[resource]],
+            true,
+            serie.data.length > 25
+          )
+        } else if (resource === 'ram') {
           const [serie] = RAMchartRef.current.chart.series
-          serie.addPoint([data.time, data[resource]], true, serie.data.length > 25)
-        }else if (resource === 'red'){
+          serie.addPoint(
+            [data.time, data[resource]],
+            true,
+            serie.data.length > 25
+          )
+        } else if (resource === 'red') {
           const [serie] = REDchartRef.current.chart.series
-          serie.addPoint([data.time, data[resource]], true, serie.data.length > 25)
+          serie.addPoint(
+            [data.time, data[resource]],
+            true,
+            serie.data.length > 25
+          )
         }
       })
     })
@@ -64,31 +75,33 @@ export default () => {
     }
   })
 
-  return <Container>
-    <Row className='text-center'>
-      <Col sm className='mt-3'>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getHighchartsOptios('cpu')}
-          ref={ CPUchartRef }
-        />
-      </Col>
-      <Col sm className='mt-3'>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getHighchartsOptios('ram')}
-          ref={ RAMchartRef }
-        />
-      </Col>
-    </Row>
-    <Row className='text-center'>
-      <Col className='mt-3'>
-        <HighchartsReact
-          highcharts={Highcharts}
-          options={getHighchartsOptios('red')}
-          ref={ REDchartRef }
-        />
-      </Col>
-    </Row>
-  </Container>
+  return (
+    <Container>
+      <Row className='text-center'>
+        <Col sm className='mt-3'>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={getHighchartsOptios('cpu')}
+            ref={CPUchartRef}
+          />
+        </Col>
+        <Col sm className='mt-3'>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={getHighchartsOptios('ram')}
+            ref={RAMchartRef}
+          />
+        </Col>
+      </Row>
+      <Row className='text-center'>
+        <Col className='mt-3'>
+          <HighchartsReact
+            highcharts={Highcharts}
+            options={getHighchartsOptios('red')}
+            ref={REDchartRef}
+          />
+        </Col>
+      </Row>
+    </Container>
+  )
 }

@@ -1,14 +1,14 @@
-import { asyncComponentLoader } from 'utils';
+import { asyncComponentLoader } from 'utils'
 
 const routes = [
   {
     exact: true,
     component: asyncComponentLoader(() => import('pages/LoginPage')),
-    path: '/',
+    path: '/'
   },
   {
-    component: asyncComponentLoader(() => import('components/NotFound')),
-  },
-];
+    component: asyncComponentLoader(() => import('components/NotFound'))
+  }
+]
 
-export default routes;
+export default routes
