@@ -3,30 +3,30 @@ import { Modal, Button, Form, Col, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import isObjectEmpty from '../../utils/isObjectEmpty'
 
-const ModalModifyCandidate = ({
+const ModalModifyUser = ({
   show,
   handleClose,
-  candidate,
-  updateCandidate
+  user,
+  updateUser
 }) => {
   const { register, handleSubmit, formState } = useForm();
   const [formErrors, setFormErrors] = useState({})
 
-  const onSubmit = async data => updateCandidate(data)
+  const onSubmit = async data => updateUser(data)
 
   useEffect(() => setFormErrors(formState.errors), [formState])
 
   return (
     <Modal show={show} size="lg">
       <Modal.Header closeButton onHide={handleClose}>
-        <Modal.Title>Modificar Candidato</Modal.Title>
+        <Modal.Title>Modificar usuario</Modal.Title>
       </Modal.Header>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <input
           hidden
           id="userId"
           name="id"
-          defaultValue={candidate.id}
+          defaultValue={user.id}
           ref={register({
             valueAsNumber: true
           })}
@@ -34,7 +34,7 @@ const ModalModifyCandidate = ({
         <input
           hidden
           name='createdAt'
-          defaultValue={candidate.createdAt}
+          defaultValue={user.createdAt}
           ref={register}
         />
 
@@ -44,7 +44,7 @@ const ModalModifyCandidate = ({
               <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                defaultValue={candidate.firstname}
+                defaultValue={user.firstname}
                 name="firstname"
                 ref={register({
                   minLength: {value: 2, message: 'El nombre debe tener al menos 2 caracteres'},
@@ -58,7 +58,7 @@ const ModalModifyCandidate = ({
               <Form.Control
                 type="text"
                 name="lastname"
-                defaultValue={candidate.lastname}
+                defaultValue={user.lastname}
                 ref={register({
                   minLength: {value: 2, message: 'El apellido debe tener al menos 2 caracteres'},
                   maxLength: {value: 50, message: 'El apellido no puede tener mas de 50 caracteres'},
@@ -73,7 +73,7 @@ const ModalModifyCandidate = ({
               <Form.Control
                 type="text"
                 name="email"
-                defaultValue={candidate.email}
+                defaultValue={user.email}
                 ref={register({
                   pattern: {value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g, message: 'El email no es valido'},
                   required: {value: true, message: 'Se requiere un email'}
@@ -86,7 +86,7 @@ const ModalModifyCandidate = ({
               <Form.Control
                 type='number'
                 name="dni"
-                defaultValue={candidate.dni}
+                defaultValue={user.dni}
                 ref={register({
                   max: {value: 100000000, message: 'El DNI no puede ser mayor a 100.000.000'},
                   min: {value: 1000000, message: 'El DNI no puede ser menor a 1.000.000'},
@@ -101,7 +101,7 @@ const ModalModifyCandidate = ({
             <Form.Control
               type="text"
               name="address"
-              defaultValue={candidate.address}
+              defaultValue={user.address}
               ref={register({
                 minLength: {value: 3, message: 'La direccion debe tener al menos 3 caracteres'},
                 maxLength: {value: 100, message: 'La direccion no puede tener mas de 100 caracteres'},
@@ -135,4 +135,4 @@ const ModalModifyCandidate = ({
   );
 };
 
-export default ModalModifyCandidate;
+export default ModalModifyUser;

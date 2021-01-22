@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 //import bindActionCreators from redux, to create the ActionCreators and bind them to props via mapDispatchToProps
 import { bindActionCreators } from "redux";
 //import actions from the store folder to be used in mapDispatchToProps
-import { login, logout } from '../../redux/Users/actions'
+import { login, logout } from '../../redux/Admin/actions'
 
 //example of simple mapDispatchToProps
 const mapDispatchToProps = (dispatch) => ({

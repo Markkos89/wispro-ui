@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Table, Container } from "react-bootstrap";
 import { ButtonWithIconAndTooltip } from "../../components/ButtonWithIconAndTooltip";
 import { faEdit, faTrash, faChartLine } from "@fortawesome/free-solid-svg-icons";
-import ModalModifyCandidate from "../../components/ModifyUserModal";
+import ModalModifyUser from "../../components/ModifyUserModal";
 import UsersFilter from '../../components/UsersFilter'
 import DeleteUserModal from '../../components/DeleteUserModal'
 import isObjectEmpty from "utils/isObjectEmpty";
@@ -11,21 +11,21 @@ import UserStatiticsModal from '../../components/UserStatiticsModal'
 import accessData from '../../data/access.json'
 
 const DashboardPage = ({
-  getCandidates,
+  getUsers,
   getAllData
 }) => {
   const [usuarios, setUsuarios] = useState([])
   const [usuariosFilter, setUsuariosFilter] = useState([])
-  const [candidateToModify, setCandidateToModify] = useState({})
+  const [userToModify, setUserToModify] = useState({})
   const [userToDelete, setUserToDelete] = useState({})
   const [userAccessToView, setUserAccessToView] = useState([])
 
   useEffect(() => {
     async function fetchData() {
-      await getCandidates();
+      await getUsers();
     }
     fetchData();
-  }, [getCandidates])
+  }, [getUsers])
 
   useEffect(() => {
     setUsuarios(getAllData);
@@ -34,7 +34,7 @@ const DashboardPage = ({
   useEffect(() => setUsuariosFilter(usuarios), [usuarios])
 
 
-  const updateCandidate = updatedUser => {
+  const updateUser = updatedUser => {
 
     setUsuarios(prevState => prevState.map(user => {
       if(user.id === updatedUser.id) return {
@@ -43,10 +43,10 @@ const DashboardPage = ({
       }
       return user
     }))
-    setCandidateToModify({})
+    setUserToModify({})
   }
 
-  const deleteCandidate = () => {
+  const deleteUser = () => {
     setUsuarios(prevState => prevState.filter(user => user.id !== userToDelete.id))
     setUserToDelete({})
   };
@@ -67,7 +67,7 @@ const DashboardPage = ({
     <Container>
       <Row>
         <Col>
-          <h1 className='text-center mt-3'>Lista de Candidatos</h1>
+          <h1 className='text-center mt-3'>Lista de usuarios</h1>
         </Col>
       </Row>
       <UsersFilter
@@ -90,24 +90,24 @@ const DashboardPage = ({
               </tr>
             </thead>
             <tbody>
-              {usuariosFilter.map((candidate, index) => {
+              {usuariosFilter.map((user, index) => {
                   return (
-                    <tr key={candidate.id}>
+                    <tr key={user.id}>
                       <td>{index + 1}</td>
-                      <td>{candidate.firstname}</td>
-                      <td>{candidate.lastname}</td>
-                      <td>{candidate.dni}</td>
-                      <td>{candidate.email}</td>
-                      <td>{candidate.address}</td>
-                      <td>{new Date(candidate.createdAt).toLocaleDateString()}</td>
+                      <td>{user.firstname}</td>
+                      <td>{user.lastname}</td>
+                      <td>{user.dni}</td>
+                      <td>{user.email}</td>
+                      <td>{user.address}</td>
+                      <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                       <td>
                         <ButtonWithIconAndTooltip
                           icon={faEdit}
                           placement="top"
                           variant="outline-secondary"
-                          fn={() => setCandidateToModify(candidate)}
+                          fn={() => setUserToModify(user)}
                           btnSize="sm"
-                          tooltipText="Modificar Candidato"
+                          tooltipText="Modificar usuario"
                         />
                       </td>
                       <td>
@@ -115,9 +115,9 @@ const DashboardPage = ({
                           icon={faTrash}
                           placement="top"
                           variant="outline-danger"
-                          fn={() => setUserToDelete(candidate)}
+                          fn={() => setUserToDelete(user)}
                           btnSize="sm"
-                          tooltipText="Eliminar Candidato"
+                          tooltipText="Eliminar usuario"
                         />
                       </td>
                       <td>
@@ -125,7 +125,7 @@ const DashboardPage = ({
                           icon={faChartLine}
                           placement="top"
                           variant="dark"
-                          fn={() => handleAccessButton(candidate.id)}
+                          fn={() => handleAccessButton(user.id)}
                           btnSize="sm"
                           tooltipText="Ver accesos"
                         />
@@ -137,16 +137,16 @@ const DashboardPage = ({
           </Table>
         </Col>
       </Row>
-      <ModalModifyCandidate
-        show={!isObjectEmpty(candidateToModify)}
-        handleClose={() => setCandidateToModify({})}
-        candidate={candidateToModify}
-        updateCandidate={updateCandidate}
+      <ModalModifyUser
+        show={!isObjectEmpty(userToModify)}
+        handleClose={() => setUserToModify({})}
+        user={userToModify}
+        updateUser={updateUser}
       />
       <DeleteUserModal
         show={!isObjectEmpty(userToDelete)}
         user={userToDelete}
-        deleteUser={deleteCandidate}
+        deleteUser={deleteUser}
         handleClose={() => setUserToDelete({})}
       />
       <UserStatiticsModal

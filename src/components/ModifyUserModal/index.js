@@ -1,3 +1,3 @@
-import ModalModifyCandidate from "./ModifyUserModal";
+import ModalModifyUser from "./ModifyUserModal";
 
-export default ModalModifyCandidate;
+export default ModalModifyUser;
