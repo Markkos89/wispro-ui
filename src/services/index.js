@@ -1,2 +1,2 @@
-export * from "./user.service";
-export * from "./candidates.service";
+export * from "./admin.service";
+export * from "./users.service";

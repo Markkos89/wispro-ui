@@ -1,60 +1,23 @@
-import { userConstants } from "./constants";
-import { userService } from "../../services";
-import { history } from "../../helpers";
+import { usersConstants } from "./constants";
+import { usersService } from "../../services";
 
-export const login = (email, password) => async (dispatch) => {
-  dispatch(request(email));
+export const getUsers = (data) => async (dispatch) => {
+  dispatch(request(data));
   try {
-    const data = await userService.login(email, password);
-    dispatch(success(data));
+    const serviceResponse = await usersService.getUsers(data);
+    dispatch(success(serviceResponse));
   } catch (error) {
     dispatch(failure(error.toString()));
   }
 
-  function request(user) {
-    return { type: userConstants.LOGIN_REQUEST, user };
+  function request(payload) {
+    return { type: usersConstants.GET_ALL_USERS_REQUEST, payload };
   }
-  function success(user) {
-    return { type: userConstants.LOGIN_SUCCESS, user };
+  function success(payload) {
+    return { type: usersConstants.GET_ALL_USERS_SUCCESS, payload };
   }
-  function failure(error) {
-    return { type: userConstants.LOGIN_FAILURE, error };
+  function failure(payload) {
+    return { type: usersConstants.GET_ALL_USERS_FAILURE, payload };
   }
 };
 
-export const logout = () => {
-  userService.logout();
-  history.push("/");
-  return { type: userConstants.LOGOUT };
-};
-
-function register(user) {
-  return (dispatch) => {
-    dispatch(request(user));
-
-    userService.register(user).then(
-      (user) => {
-        dispatch(success());
-        history.push("/login");
-      },
-      (error) => {
-        dispatch(failure(error.toString()));
-      }
-    );
-  };
-
-  function request(user) {
-    return { type: userConstants.REGISTER_REQUEST, user };
-  }
-  function success(user) {
-    return { type: userConstants.REGISTER_SUCCESS, user };
-  }
-  function failure(error) {
-    return { type: userConstants.REGISTER_FAILURE, error };
-  }
-}
-
-export const userActions = {
-  logout,
-  register,
-};

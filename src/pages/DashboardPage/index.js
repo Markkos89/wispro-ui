@@ -1,16 +1,16 @@
 import DashboardPage from "./DashboardPage";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { getCandidates } from "../../redux/Candidates/actions";
+import { getUsers } from "../../redux/Users/actions";
 
 const mapDispatchToProps = (dispatch) => ({
-  getCandidates: bindActionCreators(getCandidates, dispatch),
+  getUsers: bindActionCreators(getUsers, dispatch),
 });
 
 const mapStateToProps = (state) => ({
-  getAllData: state.candidates.getAllData,
-  getAllLoading: state.candidates.getAllLoading,
-  getAllError: state.candidates.getAllError,
+  getAllData: state.users.getAllData,
+  getAllLoading: state.users.getAllLoading,
+  getAllError: state.users.getAllError,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

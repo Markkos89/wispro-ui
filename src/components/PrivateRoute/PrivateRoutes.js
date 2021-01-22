@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, loggedIn, ...rest }) => {
       <Route
         {...rest}
         render={(props) =>
-          JSON.parse(localStorage.getItem("user"))?.tokens?.access?.token ? (
+          JSON.parse(localStorage.getItem("admin"))?.tokens?.access?.token ? (
             <Component {...props} />
           ) : (
             <Redirect to="/" />

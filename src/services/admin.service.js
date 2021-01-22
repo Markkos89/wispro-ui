@@ -1,6 +1,6 @@
 import clienteAxios from "../api/axios";
 
-export const userService = {
+export const adminServices = {
   login,
   logout,
 };
@@ -13,7 +13,7 @@ async function login(email, password) {
     };
     const response = await clienteAxios.post(`/v1/auth/login`, data);
     if (response.status === 200) {
-      localStorage.setItem("user", JSON.stringify(response.data));
+      localStorage.setItem("admin", JSON.stringify(response.data));
       return response.data;
     }
   } catch (error) {
@@ -23,5 +23,5 @@ async function login(email, password) {
 }
 
 function logout() {
-  localStorage.removeItem("user");
+  localStorage.removeItem("admin");
 }
