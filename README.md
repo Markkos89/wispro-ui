@@ -1,6 +1,6 @@
 # Wispro - UI
 
-_Este proyecto es la resolucion del challenge de Front-End Avanzado propuesto por Wispro_
+_Este proyecto es la resolución del challenge de Front-End Avanzado propuesto por Wispro_
 
 ## Comenzando 🚀
 
@@ -11,32 +11,37 @@ _Estas instrucciones te permitirán obtener una copia del proyecto en funcionami
 _Que cosas necesitas para instalar el software y como instalarlas_
 
 * Node.js  --> Descargar en <https://nodejs.org/es/download/>
-* Yarn     --> Seguir las instruccions de instalacion en <https://yarnpkg.com/getting-started/install>
+* Yarn     --> Seguir las instrucciones de instalación en <https://yarnpkg.com/getting-started/install>
 
 ### Instalación 🔧
 
 * Clonar el proyecto
-* Ejectuar dentro de la carpeta del proyecto el siguiente comando, para instalar todas las dependecias necesarias
+* Ejecutar dentro de la carpeta del proyecto el siguiente comando, para instalar todas las dependencias necesarias
 ```bash
 yarn install
 ```
-* Luego ejecutar el comando `npm run dev` y el proyecto estara corriendo en modo de desarrollo
-* Para correr el proyecto en modo desarrollo, ejecutar los siguientes comandos
+* Luego ejecutar el comando `npm run dev` y el proyecto estará corriendo en modo de desarrollo
+* Para correr el proyecto en modo producción con las características de PWA, ejecutar los siguientes comandos
     - Para Linux/Mac: 
     ```bash
-        npm run build
-        npm run serve
+        yarn build
+        yarn serve
     ```
     - Para Windows:
     ```bash
-        npm run build:windows
-        npm run serve
+        yarn build:windows
+        yarn serve
     ```
     
+### Credenciales de acceso :closed_lock_with_key:
+Email: admin@admin.com <br>
+Contraseña: admin123
+
+    
 ## Construido con 🛠️
-[Boostrap](https://getbootstrap.com) - Libreria de CSS <br>
-[Highcharts](https://www.highcharts.com) - Libreria utlizada para los graficos <br>
-[Font Awesome](https://fontawesome.com) - Libreria de iconos <br>
-[Socket.IO](https://socket.io) - Libreria utlizada para crear conexiones via web socket <br>
+[Bootstrap](https://getbootstrap.com) - Librería de CSS <br>
+[Highcharts](https://www.highcharts.com) - Librería utilizada para los gráficos <br>
+[Font Awesome](https://fontawesome.com) - Librería de iconos <br>
+[Socket.IO](https://socket.io) - Librería utilizada para crear conexiones via web socket <br>
     
     
