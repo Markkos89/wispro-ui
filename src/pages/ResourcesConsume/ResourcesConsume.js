@@ -10,7 +10,7 @@ export default () => {
   const REDchartRef = useRef(null)
 
   useEffect(() => {
-    const socket = ioClient(process.env.REACT_APP_HEROKU_API_URL || "http://localhost:3000")
+    const socket = ioClient('https://wisprotest-api.herokuapp.com')
     socket.on('resources-consume', data => {
 
       Object.keys(data).forEach(resource => {

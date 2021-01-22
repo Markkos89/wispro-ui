@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const clienteAxios = axios.create({
-  baseURL: process.env.REACT_APP_HEROKU_API_URL || "http://localhost:4000",
-  // baseURL: "https://wisprotest.herokuapp.com",
+  baseURL: "https://wisprotest-api.herokuapp.com",
 });
 
 clienteAxios.interceptors.request.use(function (config) {
