@@ -24,13 +24,13 @@ yarn install
 * Para correr el proyecto en modo producción con las características de PWA, ejecutar los siguientes comandos
     - Para Linux/Mac: 
     ```bash
-        yarn run build
-        yarn run serve
+        yarn build
+        yarn serve
     ```
     - Para Windows:
     ```bash
-        yarn run build:windows
-        yarn run serve
+        yarn build:windows
+        yarn serve
     ```
     
 ### Credenciales de acceso :closed_lock_with_key:
