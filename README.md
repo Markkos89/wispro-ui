@@ -34,7 +34,7 @@ yarn install
     ```
     
 ### Credenciales de acceso :closed_lock_with_key:
-Email: admin@admin.com
+Email: admin@admin.com <br>
 Contraseña: admin123
 
     
